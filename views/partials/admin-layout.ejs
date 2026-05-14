@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= title || 'Admin – Zaraya' %></title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+</head>
+<body>
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <div class="aside">
+    <a href="/admin" class="aside-brand">
+      <svg width="28" height="28" viewBox="0 0 60 60" fill="none">
+        <polygon points="30,4 46,22 30,32 14,22" fill="#c9a84c" opacity=".9"/>
+        <polygon points="30,32 46,22 46,44 30,56" fill="#c9a84c" opacity=".6"/>
+        <polygon points="30,32 14,22 14,44 30,56" fill="#c9a84c" opacity=".75"/>
+      </svg>
+      <div>
+        <span class="aside-name">ZARAYA</span>
+        <span class="aside-sub">Admin Panel</span>
+      </div>
+    </a>
+    <nav class="aside-nav">
+      <a href="/admin" class="anav-item <%= page==='overview' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </a>
+      <a href="/admin/products" class="anav-item <%= page==='products' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Manage Products
+      </a>
+      <a href="/admin/add" class="anav-item <%= page==='add' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Add Product
+      </a>
+    </nav>
+    <div class="aside-foot">
+      <a href="/admin/logout" class="a-logout">Sign Out</a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="amain">
+    <div class="atop">
+      <span class="atop-title"><%= title || 'Dashboard' %></span>
+      <span class="atop-date"><%= new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) %></span>
+    </div>
+    <div class="acontent">

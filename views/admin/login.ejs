@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login – Zaraya</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="lb">
+    <div class="lb-logo">
+      <svg width="44" height="44" viewBox="0 0 60 60" fill="none">
+        <polygon points="30,4 46,22 30,32 14,22" fill="#c9a84c" opacity=".9"/>
+        <polygon points="30,32 46,22 46,44 30,56" fill="#c9a84c" opacity=".6"/>
+        <polygon points="30,32 14,22 14,44 30,56" fill="#c9a84c" opacity=".75"/>
+        <circle cx="30" cy="10" r="3.5" fill="#e0c878"/>
+      </svg>
+    </div>
+    <h2 class="lb-title">Admin Login</h2>
+    <p class="lb-sub">Zaraya Jewellery · Dashboard</p>
+    <% if (error) { %><div class="lb-err"><%= error %></div><% } %>
+    <form method="POST" action="/admin/login">
+      <input class="lb-field" type="text"     name="username" placeholder="Username" autocomplete="off" autocapitalize="off" required/>
+      <input class="lb-field" type="password" name="password" placeholder="Password" required/>
+      <button class="lb-go" type="submit">Enter Dashboard →</button>
+    </form>
+    <a href="/" class="lb-back">← Back to Site</a>
+  </div>
+</div>
+</body>
+</html>

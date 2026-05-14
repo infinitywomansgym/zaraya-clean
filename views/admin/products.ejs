@@ -1,0 +1,56 @@
+<%- include('../partials/admin-layout', { title: 'Manage Products', page: 'products' }) %>
+
+<div class="view-hdr">
+  <span class="view-title">All Products (<%= products.length %>)</span>
+  <a href="/admin/add" class="add-btn">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add New Product
+  </a>
+</div>
+
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Visibility</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.forEach(p => { %>
+    <tr>
+      <td class="td-name"><%= p.name %></td>
+      <td style="color:#5a5a5a;font-size:.78rem"><%= p.cat %><% if(p.badge){ %> · <em><%= p.badge %></em><% } %></td>
+      <td class="td-price">₹<%= p.price.toLocaleString() %></td>
+      <td><span class="pill <%= p.stock ? 'p-in' : 'p-out' %>"><%= p.stock ? '✓ In Stock' : '✕ Out of Stock' %></span></td>
+      <td><span class="pill <%= p.visible ? 'p-vis' : 'p-hid' %>"><%= p.visible ? '👁 Visible' : '◌ Hidden' %></span></td>
+      <td>
+        <div class="acts">
+          <!-- HIDE / SHOW -->
+          <form method="POST" action="/admin/products/<%= p.id %>/toggle-visibility" style="display:inline">
+            <button class="aact <%= p.visible ? 'a-hide' : 'a-show' %>" type="submit">
+              <%= p.visible ? '🙈 Hide' : '👁 Show' %>
+            </button>
+          </form>
+          <!-- STOCK -->
+          <form method="POST" action="/admin/products/<%= p.id %>/toggle-stock" style="display:inline">
+            <button class="aact <%= p.stock ? 'a-oos' : 'a-ins' %>" type="submit">
+              <%= p.stock ? 'Mark OOS' : 'Mark In Stock' %>
+            </button>
+          </form>
+          <!-- DELETE -->
+          <form method="POST" action="/admin/products/<%= p.id %>/delete" style="display:inline"
+            onsubmit="return confirm('Delete <%= p.name %>? This cannot be undone.')">
+            <button class="aact a-del" type="submit">🗑 Delete</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('../partials/admin-layout-end') %>

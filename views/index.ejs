@@ -1,0 +1,218 @@
+<%- include('partials/head', { title: 'Zaraya – The Jewellery House' }) %>
+<nav id="navbar">
+  <a href="/" class="nav-logo">
+    <svg width="34" height="34" viewBox="0 0 60 60" fill="none">
+      <polygon points="30,4 46,22 30,32 14,22" fill="#c9a84c" opacity=".9"/>
+      <polygon points="30,32 46,22 46,44 30,56" fill="#c9a84c" opacity=".6"/>
+      <polygon points="30,32 14,22 14,44 30,56" fill="#c9a84c" opacity=".75"/>
+      <circle cx="30" cy="10" r="3" fill="#e0c878"/>
+    </svg>
+    <span class="nav-logo-text">ZARAYA</span>
+  </a>
+  <div class="nav-links">
+    <a href="#categories">Collection</a>
+    <a href="#about">About</a>
+    <a href="#process">Our Craft</a>
+    <a href="#testimonials">Stories</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/admin" class="nav-admin">Admin</a>
+    <a href="/shop" class="nav-shop">Shop Now</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="ring" style="width:500px;height:500px;left:50%;top:50%"></div>
+  <div class="ring" style="width:720px;height:720px;left:50%;top:50%;animation-delay:1.5s"></div>
+  <div class="ring" style="width:950px;height:950px;left:50%;top:50%;animation-delay:3s"></div>
+  <div class="hero-inner">
+    <p class="h-eye">Welcome to Jewellery House</p>
+    <div class="h-mark">
+      <svg width="86" height="86" viewBox="0 0 60 60" fill="none">
+        <polygon points="30,4 46,22 30,32 14,22" fill="#c9a84c" opacity=".95"/>
+        <polygon points="30,32 46,22 46,44 30,56" fill="#c9a84c" opacity=".65"/>
+        <polygon points="30,32 14,22 14,44 30,56" fill="#c9a84c" opacity=".8"/>
+        <circle cx="30" cy="10" r="3.5" fill="#e0c878"/>
+      </svg>
+    </div>
+    <h1 class="h-title">Your Everyday<br><em>Gold</em></h1>
+    <p class="h-sub">No Tarnish · No Fading · No Limits</p>
+    <p class="h-ar">مجوهرات جديدة برونق عصري · أناقة تليق بكِ كل يوم</p>
+    <div class="h-ctas">
+      <a href="#categories" class="btn-g">Explore Collection</a>
+      <a href="#about" class="btn-o">Our Story</a>
+    </div>
+  </div>
+  <div class="h-scroll"><span>Scroll</span><div class="sline"></div></div>
+</section>
+
+<div class="mbar" aria-hidden="true">
+  <div class="mtrack" id="mtrack">
+    <span>Zaraya Jewellery</span><span class="dot">◆</span><span>Zaraya Jewellery</span><span class="dot">◆</span>
+    <span>Zaraya Jewellery</span><span class="dot">◆</span><span>Zaraya Jewellery</span><span class="dot">◆</span>
+    <span>Zaraya Jewellery</span><span class="dot">◆</span><span>Zaraya Jewellery</span><span class="dot">◆</span>
+    <span>Zaraya Jewellery</span><span class="dot">◆</span><span>Zaraya Jewellery</span><span class="dot">◆</span>
+    <span>Zaraya Jewellery</span><span class="dot">◆</span><span>Zaraya Jewellery</span><span class="dot">◆</span>
+    <span>Zaraya Jewellery</span><span class="dot">◆</span><span>Zaraya Jewellery</span><span class="dot">◆</span>
+    <span>Zaraya Jewellery</span><span class="dot">◆</span><span>Zaraya Jewellery</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<section class="categories" id="categories">
+  <div class="cat-hdr rv">
+    <div>
+      <span class="slabel">Our Collection</span>
+      <h2 class="stitle" style="color:#f5e9c8">Curated for<br><em style="color:#e0c878">Every You</em></h2>
+    </div>
+    <a href="/shop" class="view-all-link">View All →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="/shop?cat=Bracelets" class="cat-card rv d1">
+      <div class="cat-card-art" style="background:#0a3226">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
+          <ellipse cx="110" cy="130" rx="90" ry="38" stroke="#c9a84c" stroke-width="5" opacity=".7"/>
+          <ellipse cx="110" cy="130" rx="90" ry="38" stroke="#e0c878" stroke-width="1.5" opacity=".9"/>
+          <circle cx="110" cy="92" r="10" fill="#c9a84c"/>
+          <polygon points="110,82 119,92 110,102 101,92" fill="#e0c878" opacity=".8"/>
+          <circle cx="165" cy="110" r="6" fill="#c9a84c" opacity=".6"/>
+          <circle cx="55" cy="110" r="6" fill="#c9a84c" opacity=".6"/>
+        </svg>
+      </div>
+      <div class="cat-card-info">
+        <div><p class="cat-card-name">Bracelets</p><p class="cat-card-count">Everyday collection</p></div>
+        <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+    <a href="/shop?cat=Necklaces" class="cat-card rv d2">
+      <div class="cat-card-art" style="background:#0a2a40">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
+          <path d="M30 60 Q110 160 190 60" stroke="#c9a84c" stroke-width="2" fill="none" opacity=".7" stroke-dasharray="6 3"/>
+          <polygon points="110,160 122,180 110,200 98,180" fill="#c9a84c" opacity=".9"/>
+          <circle cx="30" cy="60" r="5" fill="#c9a84c" opacity=".7"/>
+          <circle cx="190" cy="60" r="5" fill="#c9a84c" opacity=".7"/>
+        </svg>
+      </div>
+      <div class="cat-card-info">
+        <div><p class="cat-card-name">Necklaces</p><p class="cat-card-count">Chains & pendants</p></div>
+        <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+    <a href="/shop?cat=Earrings" class="cat-card rv d3">
+      <div class="cat-card-art" style="background:#3a0d1a">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
+          <circle cx="75" cy="75" r="22" stroke="#c9a84c" stroke-width="2.5" fill="none" opacity=".8"/>
+          <line x1="75" y1="97" x2="75" y2="115" stroke="#c9a84c" stroke-width="2" opacity=".7"/>
+          <polygon points="75,115 85,135 75,155 65,135" fill="#c9a84c" opacity=".85"/>
+          <circle cx="75" cy="53" r="5" fill="#c9a84c"/>
+          <circle cx="145" cy="75" r="22" stroke="#c9a84c" stroke-width="2.5" fill="none" opacity=".8"/>
+          <line x1="145" y1="97" x2="145" y2="115" stroke="#c9a84c" stroke-width="2" opacity=".7"/>
+          <polygon points="145,115 155,135 145,155 135,135" fill="#c9a84c" opacity=".85"/>
+          <circle cx="145" cy="53" r="5" fill="#c9a84c"/>
+        </svg>
+      </div>
+      <div class="cat-card-info">
+        <div><p class="cat-card-name">Earrings</p><p class="cat-card-count">Studs & drops</p></div>
+        <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+    <a href="/shop?cat=Rings" class="cat-card rv d4">
+      <div class="cat-card-art" style="background:#0e3d2e">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
+          <ellipse cx="110" cy="150" rx="65" ry="38" stroke="#c9a84c" stroke-width="9" fill="none" opacity=".65"/>
+          <ellipse cx="110" cy="150" rx="65" ry="38" stroke="#e0c878" stroke-width="1.5" fill="none"/>
+          <polygon points="110,60 138,98 110,118 82,98" fill="#c9a84c" opacity=".9"/>
+          <line x1="82" y1="98" x2="68" y2="132" stroke="#c9a84c" stroke-width="8" opacity=".6"/>
+          <line x1="138" y1="98" x2="152" y2="132" stroke="#c9a84c" stroke-width="8" opacity=".6"/>
+        </svg>
+      </div>
+      <div class="cat-card-info">
+        <div><p class="cat-card-name">Rings</p><p class="cat-card-count">Statement pieces</p></div>
+        <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+    <a href="/shop?cat=Bangles" class="cat-card rv d5">
+      <div class="cat-card-art" style="background:#0b3830">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
+          <ellipse cx="110" cy="110" rx="75" ry="75" stroke="#c9a84c" stroke-width="8" fill="none" opacity=".7"/>
+          <ellipse cx="110" cy="110" rx="75" ry="75" stroke="#e0c878" stroke-width="1.5" fill="none" opacity=".9"/>
+          <circle cx="110" cy="35" r="9" fill="#c9a84c"/>
+          <polygon points="110,26 119,35 110,44 101,35" fill="#e0c878"/>
+        </svg>
+      </div>
+      <div class="cat-card-info">
+        <div><p class="cat-card-name">Bangles</p><p class="cat-card-count">Stack & shine</p></div>
+        <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+    <a href="/shop?cat=Bestsellers" class="cat-card bestseller rv d6">
+      <span class="bs-badge">★ Best Sellers</span>
+      <div class="cat-card-art" style="background:linear-gradient(135deg,#1a4a30 0%,#0d3020 100%)">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
+          <circle cx="110" cy="110" r="55" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".2"/>
+          <polygon points="110,48 118,86 155,75 130,102 148,138 110,118 72,138 90,102 65,75 102,86" fill="none" stroke="#c9a84c" stroke-width="2" opacity=".9"/>
+          <polygon points="110,58 116,84 140,77 122,97 135,126 110,112 85,126 98,97 80,77 104,84" fill="#c9a84c" opacity=".25"/>
+          <circle cx="110" cy="110" r="8" fill="#c9a84c"/>
+          <circle cx="110" cy="110" r="5" fill="#e0c878"/>
+        </svg>
+      </div>
+      <div class="cat-card-info" style="background:rgba(201,168,76,.06)">
+        <div><p class="cat-card-name" style="color:#e0c878">Best Sellers</p><p class="cat-card-count" style="color:rgba(201,168,76,.7)">Top picks · Most loved</p></div>
+        <div class="cat-card-arrow" style="border-color:rgba(201,168,76,.5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="rv">
+    <div class="acard">
+      <div style="margin-bottom:1.8rem"><svg width="48" height="48" viewBox="0 0 60 60" fill="none"><polygon points="30,4 46,22 30,32 14,22" fill="#c9a84c" opacity=".95"/><polygon points="30,32 46,22 46,44 30,56" fill="#c9a84c" opacity=".6"/><polygon points="30,32 14,22 14,44 30,56" fill="#c9a84c" opacity=".75"/><circle cx="30" cy="10" r="3" fill="#e0c878"/></svg></div>
+      <p class="acard-q">"WELCOME TO THE JEWLLERY HOUSE."</p>
+      <p class="acard-p">Where everyday jewellery is redefined through pieces made to stay with you, crafted for lasting shine, effortless wear, and a quiet elegance that becomes part of who you are.</p>
+      <div class="acard-ar">حيث يُعاد تعريف المجوهرات اليومية من خلال قطع صُممت لتبقى معك، وصُنعت لتمنحك لمعاناً يدوم، وراحةً في الارتداء،<>وأناقةً هادئة تصبح جزءاً من هويتك.</div>
+    </div>
+    <div class="astats">
+      <div class="astat rv d1"><span class="astat-n">79+</span><span class="astat-l">Unique Pieces</span></div>
+      <div class="astat rv d2"><span class="astat-n">100%</span><span class="astat-l">Waterproof</span></div>
+      <div class="astat rv d3"><span class="astat-n">277</span><span class="astat-l">Happy Customers</span></div>
+      <div class="astat rv d4"><span class="astat-n">∞</span><span class="astat-l">Days Wearable</span></div>
+    </div>
+  </div>
+  <div class="rv d2">
+    <span class="slabel">About Zaraya</span>
+    <h2 class="stitle">Jewellery That<br><em>Lives With You</em></h2>
+    <p style="margin-top:1.4rem;font-size:.83rem;line-height:1.9;color:#5a5a5a">Born in Kunnamangalam, Calicut, Zaraya was created with one belief — beautiful jewellery should be made for real life.</p>
+    <div style="margin-top:2rem">
+      <div class="pritem"><div class="prico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg></div><div><p class="prt">Anti-Tarnish</p><p class="prd">Stays brilliant — no fading, no discolouration, ever.</p></div></div>
+      <div class="pritem"><div class="prico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><p class="prt">Waterproof</p><p class="prd">Swim, shower, sweat — built for everyday adventures.</p></div></div>
+      <div class="pritem"><div class="prico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div><p class="prt">Lightweight</p><p class="prd">So light you forget you're wearing it.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="testi" id="testimonials">
+  <div style="text-align:center" class="rv">
+    <span class="slabel">Customer Stories</span>
+    <h2 class="stitle" style="color:#f5e9c8">Worn with <em style="color:#e0c878">Love</em></h2>
+  </div>
+  <div class="tgrid">
+    <div class="tcard rv d1"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"I wear my Zaraya bracelet every day — still looks brand new after months."</p><p class="tauth">Amina K.</p><p class="tloc">Calicut, Kerala</p></div>
+    <div class="tcard rv d2"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"Finally found jewellery that doesn't turn green! Unbelievable quality."</p><p class="tauth">Fathima R.</p><p class="tloc">Kozhikode</p></div>
+    <div class="tcard rv d3"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"Ordered two chains as gifts — the packaging and quality were stunning."</p><p class="tauth">Priya M.</p><p class="tloc">Bangalore</p></div>
+  </div>
+</section>
+
+<section class="nl" id="contact">
+  <p class="slabel" style="color:rgba(7,46,36,.55)">Stay Connected</p>
+  <h2 class="nl-title">First to Know. First to Shine.</h2>
+  <p class="nl-sub">Join the Zaraya family — early access to new collections and exclusive offers.</p>
+  <div class="nl-form">
+    <input type="email" class="nl-inp" placeholder="Your email address"/>
+    <button class="nl-btn">Subscribe</button>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

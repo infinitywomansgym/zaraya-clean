@@ -1,0 +1,76 @@
+<%- include('../partials/admin-layout', { title: 'Add Product', page: 'add' }) %>
+
+<% if (success) { %>
+<div class="success-msg">✓ Product added successfully! <a href="/admin/products" style="color:#1a7a3a">View all products →</a></div>
+<% } %>
+<% if (error) { %>
+<div class="error-msg">⚠ <%= error %></div>
+<% } %>
+
+<div class="aform">
+  <form method="POST" action="/admin/products/add">
+    <div class="aform-grid">
+      <div class="aform-row span-2">
+        <label class="af-lbl">Product Name *</label>
+        <input class="af-inp" type="text" name="name" placeholder="e.g. Dainty Heart Bracelet" required autocomplete="off"/>
+      </div>
+      <div class="aform-row">
+        <label class="af-lbl">Category *</label>
+        <select class="af-sel" name="cat">
+          <option>Bracelets</option>
+          <option>Necklaces</option>
+          <option>Earrings</option>
+          <option>Rings</option>
+          <option>Bangles</option>
+          <option>Anklets</option>
+        </select>
+      </div>
+      <div class="aform-row">
+        <label class="af-lbl">Price (₹) *</label>
+        <input class="af-inp" type="number" name="price" min="1" placeholder="999" required/>
+      </div>
+      <div class="aform-row">
+        <label class="af-lbl">Badge Label</label>
+        <select class="af-sel" name="badge">
+          <option value="">None</option>
+          <option>New Arrival</option>
+          <option>Bestseller</option>
+          <option>Popular</option>
+          <option>Limited Edition</option>
+          <option>Sale</option>
+        </select>
+      </div>
+      <div class="aform-row">
+        <label class="af-lbl">Status</label>
+        <div class="af-checks">
+          <label class="af-check"><input type="checkbox" name="stock" checked/><span>In Stock</span></label>
+          <label class="af-check"><input type="checkbox" name="visible" checked/><span>Visible on Site</span></label>
+          <label class="af-check"><input type="checkbox" name="bestseller"/><span>Bestseller</span></label>
+        </div>
+      </div>
+      <div class="aform-row span-2">
+        <label class="af-lbl">Card Background Colour</label>
+        <div class="cswatches">
+          <label><input type="radio" name="color" value="#0d3a2c" checked style="display:none"/><div class="csw selected" style="background:#0d3a2c" title="Emerald" onclick="selectColor(this,'#0d3a2c')"></div></label>
+          <label><input type="radio" name="color" value="#0a2a40" style="display:none"/><div class="csw" style="background:#0a2a40" title="Sapphire" onclick="selectColor(this,'#0a2a40')"></div></label>
+          <label><input type="radio" name="color" value="#3a0d1a" style="display:none"/><div class="csw" style="background:#3a0d1a" title="Ruby" onclick="selectColor(this,'#3a0d1a')"></div></label>
+          <label><input type="radio" name="color" value="#2d2207" style="display:none"/><div class="csw" style="background:#2d2207" title="Copper" onclick="selectColor(this,'#2d2207')"></div></label>
+          <label><input type="radio" name="color" value="#1a1a1a" style="display:none"/><div class="csw" style="background:#1a1a1a" title="Onyx" onclick="selectColor(this,'#1a1a1a')"></div></label>
+          <label><input type="radio" name="color" value="#2a1a40" style="display:none"/><div class="csw" style="background:#2a1a40" title="Violet" onclick="selectColor(this,'#2a1a40')"></div></label>
+        </div>
+      </div>
+    </div>
+    <div class="aform-btns">
+      <button class="af-save" type="submit">Save Product</button>
+      <a href="/admin/products" class="af-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+<script>
+function selectColor(el, val) {
+  document.querySelectorAll('.csw').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  el.previousElementSibling.value = val;
+}
+</script>
+<%- include('../partials/admin-layout-end') %>

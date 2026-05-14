@@ -1,0 +1,122 @@
+<%- include('partials/head', { title: cat + ' – Zaraya Jewellery', extraCSS: 'shop.css' }) %>
+
+<nav id="navbar">
+  <a href="/" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 60 60" fill="none">
+      <polygon points="30,4 46,22 30,32 14,22" fill="#c9a84c" opacity=".9"/>
+      <polygon points="30,32 46,22 46,44 30,56" fill="#c9a84c" opacity=".6"/>
+      <polygon points="30,32 14,22 14,44 30,56" fill="#c9a84c" opacity=".75"/>
+      <circle cx="30" cy="10" r="3" fill="#e0c878"/>
+    </svg>
+    <span class="nav-logo-text">ZARAYA</span>
+  </a>
+  <div class="nav-links">
+    <a href="/#categories">Collection</a>
+    <a href="/#about">About</a>
+    <a href="/#contact">Contact</a>
+  </div>
+  <a href="/" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="shop-hero">
+  <div class="shop-hero-inner">
+    <div class="shop-breadcrumb">
+      <a href="/">Home</a><span>›</span>
+      <span><%= cat === 'All' ? 'All Products' : cat %></span>
+    </div>
+    <%
+      const titles = {
+        All:         'All <em>Collection</em>',
+        Bracelets:   'Our <em>Bracelets</em>',
+        Necklaces:   'Our <em>Necklaces</em>',
+        Earrings:    'Our <em>Earrings</em>',
+        Rings:       'Our <em>Rings</em>',
+        Bangles:     'Our <em>Bangles</em>',
+        Bestsellers: '<em>Best Sellers</em>'
+      };
+      const subs = {
+        All:         'Every piece we make — lightweight, anti-tarnish, waterproof.',
+        Bracelets:   'Worn every day. Styled every way.',
+        Necklaces:   'Chains & pendants for every neckline.',
+        Earrings:    'Studs & drops — effortless elegance.',
+        Rings:       'Statement pieces for every finger.',
+        Bangles:     'Stack them, layer them, love them.',
+        Bestsellers: 'The pieces everyone is wearing right now.'
+      };
+    %>
+    <h1 class="shop-title"><%- titles[cat] || 'Our <em>Collection</em>' %></h1>
+    <p class="shop-subtitle"><%= subs[cat] || '' %></p>
+  </div>
+</div>
+
+<div class="cat-tabs">
+  <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Bestsellers'].forEach(c => { %>
+    <a href="/shop?cat=<%= c %>" class="cat-tab <%= cat === c ? 'active' : '' %>">
+      <%= c === 'Bestsellers' ? '★ Best Sellers' : c %>
+    </a>
+  <% }) %>
+</div>
+
+<div class="shop-body">
+  <div class="shop-meta">
+    <p class="shop-count"><strong><%= products.length %></strong> product<%= products.length !== 1 ? 's' : '' %></p>
+    <div class="shop-sort">
+      <span>Sort by</span>
+      <select id="sortSel">
+        <option value="default">Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="shop-grid">
+    <% if (products.length === 0) { %>
+      <div class="shop-empty">
+        <div class="shop-empty-icon">◇</div>
+        <p class="shop-empty-title">No items here yet</p>
+        <p class="shop-empty-sub">Check back soon — new pieces are on the way.</p>
+      </div>
+    <% } else { %>
+      <% products.forEach((p, i) => {
+           const isBs = p.bestseller || p.badge === 'Bestseller';
+      %>
+        <div class="scard rv" style="transition-delay:<%= i * 0.05 %>s">
+          <div class="scard-img">
+            <%- jewel(p.cat, p.color) %>
+            <% if (isBs) { %>
+              <span class="bs-star">★ Best Seller</span>
+            <% } else if (p.badge) { %>
+              <span class="scard-badge"><%= p.badge %></span>
+            <% } %>
+            <% if (!p.stock) { %><span class="scard-oos">Out of Stock</span><% } %>
+          </div>
+          <div class="scard-body">
+            <span class="scard-cat"><%= p.cat %></span>
+            <p class="scard-name"><%= p.name %></p>
+            <div class="scard-foot">
+              <span class="scard-price">₹<%= p.price.toLocaleString() %></span>
+              <button class="scard-btn" <%= !p.stock ? 'disabled' : '' %>>
+                <%= p.stock ? 'Add to Cart' : 'Out of Stock' %>
+              </button>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</div>
+
+<div class="shop-footer">
+  <div class="sf-links">
+    <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Bestsellers'].forEach(c => { %>
+      <a href="/shop?cat=<%= c %>"><%= c === 'Bestsellers' ? 'Best Sellers' : c %></a>
+    <% }) %>
+  </div>
+  <p class="sf-copy">© 2025 Zaraya Jewellery · The Jewellery House · Calicut, Kerala</p>
+</div>
+
+<script src="/js/shop.js"></script>
+</body>
+</html>
