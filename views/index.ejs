@@ -192,67 +192,16 @@
   </div>
 </section>
 
-<section class="testi" id="testimonials">
-  <div style="text-align:center" class="rv">
-    <span class="slabel">Customer Stories</span>
-    <h2 class="stitle" style="color:#f5e9c8">Worn with <em style="color:#e0c878">Love</em></h2>
-  </div>
-  <div class="tgrid">
-    <div class="tcard rv d1"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"I wear my Zaraya bracelet every day — still looks brand new after months."</p><p class="tauth">Amina K.</p><p class="tloc">Calicut, Kerala</p></div>
-    <div class="tcard rv d2"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"Finally found jewellery that doesn't turn green! Unbelievable quality."</p><p class="tauth">Fathima R.</p><p class="tloc">Kozhikode</p></div>
-    <div class="tcard rv d3"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"Ordered two chains as gifts — the packaging and quality were stunning."</p><p class="tauth">Priya M.</p><p class="tloc">Bangalore</p></div>
-  </div>
-</section>
-
 <section class="nl" id="contact">
   <p class="slabel" style="color:rgba(7,46,36,.55)">Stay Connected</p>
-  <h2 class="nl-title">First to Know.<br>First to Shine.</h2>
+  <h2 class="nl-title">First to Know. First to Shine.</h2>
   <p class="nl-sub">Join the Zaraya family — early access to new collections and exclusive offers.</p>
   <div class="nl-form">
-    <input type="email" class="nl-inp" id="sub-email" placeholder="Your email address"/>
-    <button class="nl-btn" onclick="subscribe()">Subscribe</button>
+    <input type="email" class="nl-inp" placeholder="Your email address"/>
+    <button class="nl-btn">Subscribe</button>
   </div>
-  <p id="sub-msg" style="margin-top:1rem;font-size:.75rem;color:rgba(7,46,36,.7);display:none"></p>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>
-emailjs.init('DE5dWLL_TBFXJmwEK');
+<%- include('partials/footer') %>
 
-function subscribe() {
-  const email = document.getElementById('sub-email').value.trim();
-  const msg = document.getElementById('sub-msg');
-  
-  if (!email || !email.includes('@')) {
-    msg.style.display = 'block';
-    msg.style.color = '#c0392b';
-    msg.textContent = 'Please enter a valid email address.';
-    return;
-  }
 
-  const btn = document.querySelector('.nl-btn');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-
-  const date = new Date().toLocaleDateString('en-IN', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
-
-  emailjs.send('service_svgys4o', 'template_ovz5nvu', {
-    subscriber_email: email,
-    date: date
-  }).then(() => {
-    msg.style.display = 'block';
-    msg.style.color = '#072e24';
-    msg.textContent = '✓ Thank you for subscribing! Welcome to the Zaraya family.';
-    btn.textContent = 'Subscribed ✓';
-    document.getElementById('sub-email').value = '';
-  }).catch(() => {
-    msg.style.display = 'block';
-    msg.style.color = '#c0392b';
-    msg.textContent = 'Something went wrong. Please try again.';
-    btn.textContent = 'Subscribe';
-    btn.disabled = false;
-  });
-}
-</script>
