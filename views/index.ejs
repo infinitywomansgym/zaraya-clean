@@ -206,12 +206,53 @@
 
 <section class="nl" id="contact">
   <p class="slabel" style="color:rgba(7,46,36,.55)">Stay Connected</p>
-  <h2 class="nl-title">First to Know. First to Shine.</h2>
+  <h2 class="nl-title">First to Know.<br>First to Shine.</h2>
   <p class="nl-sub">Join the Zaraya family — early access to new collections and exclusive offers.</p>
   <div class="nl-form">
-    <input type="email" class="nl-inp" placeholder="Your email address"/>
-    <button class="nl-btn">Subscribe</button>
+    <input type="email" class="nl-inp" id="sub-email" placeholder="Your email address"/>
+    <button class="nl-btn" onclick="subscribe()">Subscribe</button>
   </div>
+  <p id="sub-msg" style="margin-top:1rem;font-size:.75rem;color:rgba(7,46,36,.7);display:none"></p>
 </section>
 
-<%- include('partials/footer') %>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+emailjs.init('DE5dWLL_TBFXJmwEK');
+
+function subscribe() {
+  const email = document.getElementById('sub-email').value.trim();
+  const msg = document.getElementById('sub-msg');
+  
+  if (!email || !email.includes('@')) {
+    msg.style.display = 'block';
+    msg.style.color = '#c0392b';
+    msg.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
+  const btn = document.querySelector('.nl-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const date = new Date().toLocaleDateString('en-IN', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  emailjs.send('service_svgys4o', 'template_ovz5nvu', {
+    subscriber_email: email,
+    date: date
+  }).then(() => {
+    msg.style.display = 'block';
+    msg.style.color = '#072e24';
+    msg.textContent = '✓ Thank you for subscribing! Welcome to the Zaraya family.';
+    btn.textContent = 'Subscribed ✓';
+    document.getElementById('sub-email').value = '';
+  }).catch(() => {
+    msg.style.display = 'block';
+    msg.style.color = '#c0392b';
+    msg.textContent = 'Something went wrong. Please try again.';
+    btn.textContent = 'Subscribe';
+    btn.disabled = false;
+  });
+}
+</script>
