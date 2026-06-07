@@ -159,7 +159,8 @@
 </div>
 
 <script>
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('zaraya-cart') || '[]');
+updateCartUI();
 
 function addToCart(name, price) {
   const existing = cart.find(i => i.name === name);
@@ -175,6 +176,8 @@ function removeFromCart(name) {
 }
 
 function updateCartUI() {
+  localStorage.setItem('zaraya-cart', JSON.stringify(cart));
+  const count = cart.reduce((s, i) => s + i.qty, 0);
   const count = cart.reduce((s, i) => s + i.qty, 0);
   document.getElementById('cart-count').textContent = count;
   const fab = document.getElementById('cart-fab');
@@ -237,7 +240,8 @@ function confirmOrder() {
   window.open('https://wa.me/917090702416?text=' + encodeURIComponent(msg), '_blank');
   closeTerms();
   cart = [];
-  updateCartUI();
+  localStorage.removeItem('zaraya-cart');
+updateCartUI();
 }
 </script>
 
