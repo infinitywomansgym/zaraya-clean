@@ -34,7 +34,7 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 .hero-inner{position:relative;z-index:2;text-align:center;padding:0 2rem;animation:henter 1.4s cubic-bezier(.16,1,.3,1) forwards;opacity:0}
 @keyframes henter{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fin{to{opacity:1}}
-.h-eye{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--au);margin-bottom:2rem;animation:fin 1.8s .3s forwards;opacity:0}
+.h-eye{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--au);margin-bottom:.5rem;animation:fin 1.8s .3s forwards;opacity:0}
 .h-mark{margin:0 auto -5rem;animation:fin 1.8s .5s forwards;opacity:0}
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1;color:#fff;margin-bottom:.5rem;animation:fin 1.8s .6s forwards;opacity:0}
 .h-title em{font-style:italic;color:var(--al)}
