@@ -18,7 +18,11 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 .nav-shop:hover{background:var(--au);color:var(--g)}
 .nav-admin{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);padding:.4rem .9rem;background:transparent;text-decoration:none;display:inline-block;transition:all .3s}
 .nav-admin:hover{color:var(--au);border-color:var(--au)}
-
+.nav-logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
 /* HERO */
 .hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--g)}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,#1a5c46 0%,#0a3528 40%,#050f0c 100%)}
