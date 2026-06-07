@@ -1,13 +1,7 @@
 <%- include('partials/head', { title: 'Zaraya – The Jewellery House' }) %>
 <nav id="navbar">
   <a href="/" class="nav-logo">
-    <svg width="34" height="34" viewBox="0 0 60 60" fill="none">
-      <polygon points="30,4 46,22 30,32 14,22" fill="#c9a84c" opacity=".9"/>
-      <polygon points="30,32 46,22 46,44 30,56" fill="#c9a84c" opacity=".6"/>
-      <polygon points="30,32 14,22 14,44 30,56" fill="#c9a84c" opacity=".75"/>
-      <circle cx="30" cy="10" r="3" fill="#e0c878"/>
-    </svg>
-    <span class="nav-logo-text">ZARAYA</span>
+    <img src="/img/logo.png" alt="Zaraya – The Jewellery House" class="nav-logo-img" />
   </a>
   <div class="nav-links">
     <a href="#categories">Collection</a>
@@ -192,6 +186,18 @@
   </div>
 </section>
 
+<section class="testi" id="testimonials">
+  <div style="text-align:center" class="rv">
+    <span class="slabel">Customer Stories</span>
+    <h2 class="stitle" style="color:#f5e9c8">Worn with <em style="color:#e0c878">Love</em></h2>
+  </div>
+  <div class="tgrid">
+    <div class="tcard rv d1"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"I wear my Zaraya bracelet every day — still looks brand new after months."</p><p class="tauth">Amina K.</p><p class="tloc">Calicut, Kerala</p></div>
+    <div class="tcard rv d2"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"Finally found jewellery that doesn't turn green! Unbelievable quality."</p><p class="tauth">Fathima R.</p><p class="tloc">Kozhikode</p></div>
+    <div class="tcard rv d3"><div class="tstars">★ ★ ★ ★ ★</div><p class="ttext">"Ordered two chains as gifts — the packaging and quality were stunning."</p><p class="tauth">Priya M.</p><p class="tloc">Bangalore</p></div>
+  </div>
+</section>
+
 <section class="nl" id="contact">
   <p class="slabel" style="color:rgba(7,46,36,.55)">Stay Connected</p>
   <h2 class="nl-title">First to Know. First to Shine.</h2>
@@ -237,4 +243,3 @@ function subscribe() {
   });
 }
 </script>
-
