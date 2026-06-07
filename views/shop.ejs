@@ -97,7 +97,7 @@
             <p class="scard-name"><%= p.name %></p>
             <div class="scard-foot">
               <span class="scard-price">₹<%= p.price.toLocaleString() %></span>
-              <button class="scard-btn" <%= !p.stock ? 'disabled' : '' %> onclick="showTerms('<%= p.name %>')">
+              <button class="scard-btn" <%= !p.stock ? 'disabled' : '' %> onclick="addToCart('<%= p.name %>', <%= p.price %>)">
                 <%= p.stock ? 'Add to Cart' : 'Out of Stock' %>
               </button>
             </div>
@@ -116,8 +116,24 @@
   </div>
   <p class="sf-copy">© 2025 Zaraya Jewellery · The Jewellery House · Calicut, Kerala</p>
 </div>
+<!-- Cart Button -->
+<div id="cart-fab" onclick="openCart()" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:900;background:#c9a84c;color:#072e24;border:none;padding:.9rem 1.6rem;cursor:pointer;font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;">
+  <span>🛒 Cart</span><span id="cart-count" style="background:#072e24;color:#c9a84c;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.68rem;">0</span>
+</div>
+
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" style="display:none;position:fixed;top:0;right:0;width:340px;height:100vh;background:#072e24;border-left:1px solid rgba(201,168,76,.3);z-index:998;padding:2rem;overflow-y:auto;flex-direction:column;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+    <h2 style="font-family:'Cormorant Garamond',serif;color:#c9a84c;font-size:1.4rem;font-weight:300;">Your Cart</h2>
+    <button onclick="closeCart()" style="background:none;border:none;color:#c9a84c;font-size:1.4rem;cursor:pointer;">✕</button>
+  </div>
+  <div id="cart-items" style="flex:1;"></div>
+  <div id="cart-total" style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(201,168,76,.2);font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#c9a84c;"></div>
+  <button onclick="proceedToOrder()" id="order-btn" style="margin-top:1.2rem;width:100%;padding:.9rem;background:#c9a84c;color:#072e24;border:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;">Place Order</button>
+</div>
+
 <!-- Terms Modal -->
-<div id="terms-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;display:flex;align-items:center;justify-content:center;">
+<div id="terms-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;align-items:center;justify-content:center;">
   <div style="background:#072e24;border:1px solid rgba(201,168,76,.3);max-width:560px;width:90%;max-height:80vh;overflow-y:auto;padding:2.5rem;position:relative;">
     <button onclick="closeTerms()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:#c9a84c;font-size:1.4rem;cursor:pointer;">✕</button>
     <h2 style="font-family:'Cormorant Garamond',serif;color:#c9a84c;font-size:1.6rem;font-weight:300;margin-bottom:1.5rem;">Terms & Conditions</h2>
@@ -143,14 +159,65 @@
 </div>
 
 <script>
-let currentProduct = '';
-function showTerms(name) {
-  currentProduct = name;
+let cart = [];
+
+function addToCart(name, price) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; } 
+  else { cart.push({ name, price, qty: 1 }); }
+  updateCartUI();
+  openCart();
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(i => i.name !== name);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+  const fab = document.getElementById('cart-fab');
+  fab.style.display = count > 0 ? 'flex' : 'none';
+
+  const itemsEl = document.getElementById('cart-items');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<p style="color:rgba(245,233,200,.5);font-size:.8rem;">Your cart is empty.</p>';
+    document.getElementById('cart-total').textContent = '';
+  } else {
+    itemsEl.innerHTML = cart.map(i => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid rgba(201,168,76,.1);">
+        <div>
+          <p style="color:#f5e9c8;font-size:.82rem;">${i.name}</p>
+          <p style="color:rgba(201,168,76,.7);font-size:.72rem;">₹${i.price.toLocaleString()} × ${i.qty}</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:.8rem;">
+          <span style="color:#c9a84c;font-size:.85rem;">₹${(i.price * i.qty).toLocaleString()}</span>
+          <button onclick="removeFromCart('${i.name}')" style="background:none;border:none;color:rgba(201,168,76,.5);cursor:pointer;font-size:1rem;">✕</button>
+        </div>
+      </div>
+    `).join('');
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('cart-total').innerHTML = `Total: ₹${total.toLocaleString()}`;
+  }
+}
+
+function openCart() {
+  const s = document.getElementById('cart-sidebar');
+  s.style.display = 'flex';
+}
+function closeCart() {
+  document.getElementById('cart-sidebar').style.display = 'none';
+}
+function proceedToOrder() {
+  if (cart.length === 0) return;
+  closeCart();
   document.getElementById('terms-modal').style.display = 'flex';
   document.getElementById('terms-check').checked = false;
-  document.getElementById('terms-confirm').disabled = true;
-  document.getElementById('terms-confirm').style.opacity = '.5';
-  document.getElementById('terms-confirm').style.cursor = 'not-allowed';
+  const btn = document.getElementById('terms-confirm');
+  btn.disabled = true;
+  btn.style.opacity = '.5';
+  btn.style.cursor = 'not-allowed';
 }
 function closeTerms() {
   document.getElementById('terms-modal').style.display = 'none';
@@ -164,9 +231,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 function confirmOrder() {
-  const msg = `Hi Zaraya! I'd like to order: ${currentProduct}. I have read and agreed to the Terms & Conditions.`;
+  const lines = cart.map(i => `• ${i.name} × ${i.qty} — ₹${(i.price * i.qty).toLocaleString()}`).join('\n');
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const msg = `Hi Zaraya! I'd like to place an order:\n\n${lines}\n\nTotal: ₹${total.toLocaleString()}\n\nI have read and agreed to the Terms & Conditions.`;
   window.open('https://wa.me/917090702416?text=' + encodeURIComponent(msg), '_blank');
   closeTerms();
+  cart = [];
+  updateCartUI();
 }
 </script>
 
