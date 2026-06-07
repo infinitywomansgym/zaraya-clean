@@ -97,7 +97,7 @@
             <p class="scard-name"><%= p.name %></p>
             <div class="scard-foot">
               <span class="scard-price">₹<%= p.price.toLocaleString() %></span>
-              <button class="scard-btn" <%= !p.stock ? 'disabled' : '' %>>
+              <button class="scard-btn" <%= !p.stock ? 'disabled' : '' %> onclick="showTerms('<%= p.name %>')">
                 <%= p.stock ? 'Add to Cart' : 'Out of Stock' %>
               </button>
             </div>
@@ -116,6 +116,59 @@
   </div>
   <p class="sf-copy">© 2025 Zaraya Jewellery · The Jewellery House · Calicut, Kerala</p>
 </div>
+<!-- Terms Modal -->
+<div id="terms-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#072e24;border:1px solid rgba(201,168,76,.3);max-width:560px;width:90%;max-height:80vh;overflow-y:auto;padding:2.5rem;position:relative;">
+    <button onclick="closeTerms()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:#c9a84c;font-size:1.4rem;cursor:pointer;">✕</button>
+    <h2 style="font-family:'Cormorant Garamond',serif;color:#c9a84c;font-size:1.6rem;font-weight:300;margin-bottom:1.5rem;">Terms & Conditions</h2>
+    <div style="font-size:.78rem;color:rgba(245,233,200,.75);line-height:1.9;">
+      <p><strong style="color:#c9a84c;">1. Skin & Allergy Awareness</strong><br>Our jewelry products are crafted to be safe for all skin types. However, customers are advised to be aware of their personal skin conditions and allergies prior to use. We recommend conducting a patch test to identify any potential allergic reactions before prolonged or continuous wear.</p><br>
+      <p><strong style="color:#c9a84c;">2. Health and Liability Disclaimer</strong><br>We disclaim responsibility for any health complications, allergic reactions, or other adverse effects arising from the use of our products. Customers should consult a healthcare professional if uncertain about skin sensitivities.</p><br>
+      <p><strong style="color:#c9a84c;">3. Payment Terms</strong><br>Full payment must be completed prior to order confirmation. No orders will be processed after receipt of full payment.</p><br>
+      <p><strong style="color:#c9a84c;">4. Order Confirmation and Cancellation</strong><br>All orders are subject to availability and final confirmation. We reserve the right to cancel any order for reasons beyond our control such as stock shortages or payment failures. Customers may cancel orders within 24 hours of confirmation; cancellations beyond this timeframe will be handled on a case-by-case basis.</p><br>
+      <p><strong style="color:#c9a84c;">5. Customer Responsibility</strong><br>Customers are responsible for inspecting the product at the time of pickup. Any visible defects or discrepancies should be reported immediately to facilitate prompt resolution.</p><br>
+      <p><strong style="color:#c9a84c;">6. Refund Policy</strong><br>Refunds outside of the guarantee period are subject to individual evaluation. All refund requests require presentation of the original purchase receipt and intact packaging. Zaraya jewelry reserves the right to approve or deny refund requests based on the condition of the returned product.</p><br>
+      <p><strong style="color:#c9a84c;">7. Guarantee</strong><br>All items purchased from Zaraya jewelry are covered by a manufacturer's guarantee valid for 30 days from the date of purchase. This guarantee protects against any defects in material or workmanship under normal use.</p><br>
+      <p><strong style="color:#c9a84c;">8. Replacement Policy</strong><br>In the event a product exhibits defects covered under the guarantee, we will replace the item with the identical design. Should the same design be unavailable due to stock limitations, a replacement with an alternative design of equal value will be offered. If neither option is feasible, a refund will be processed as a last resort.</p><br>
+      <p><strong style="color:#c9a84c;">9. Damage and Misuse</strong><br>Zaraya jewelry is not liable for any damage resulting from misuse, neglect, accidents, physical abuse, or improper handling of the product. Any physical damage caused by harsh usage is excluded from the guarantee.</p>
+    </div>
+    <div style="margin-top:1.8rem;display:flex;align-items:center;gap:.8rem;">
+      <input type="checkbox" id="terms-check" style="width:16px;height:16px;accent-color:#c9a84c;cursor:pointer;">
+      <label for="terms-check" style="font-size:.78rem;color:rgba(245,233,200,.8);cursor:pointer;">I have read and agree to the Terms & Conditions</label>
+    </div>
+    <button id="terms-confirm" onclick="confirmOrder()" disabled style="margin-top:1.2rem;width:100%;padding:.9rem;background:#c9a84c;color:#072e24;border:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:not-allowed;opacity:.5;font-family:'Jost',sans-serif;">
+      Confirm Order via WhatsApp
+    </button>
+  </div>
+</div>
+
+<script>
+let currentProduct = '';
+function showTerms(name) {
+  currentProduct = name;
+  document.getElementById('terms-modal').style.display = 'flex';
+  document.getElementById('terms-check').checked = false;
+  document.getElementById('terms-confirm').disabled = true;
+  document.getElementById('terms-confirm').style.opacity = '.5';
+  document.getElementById('terms-confirm').style.cursor = 'not-allowed';
+}
+function closeTerms() {
+  document.getElementById('terms-modal').style.display = 'none';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('terms-check').addEventListener('change', function() {
+    const btn = document.getElementById('terms-confirm');
+    btn.disabled = !this.checked;
+    btn.style.opacity = this.checked ? '1' : '.5';
+    btn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
+  });
+});
+function confirmOrder() {
+  const msg = `Hi Zaraya! I'd like to order: ${currentProduct}. I have read and agreed to the Terms & Conditions.`;
+  window.open('https://wa.me/917090702416?text=' + encodeURIComponent(msg), '_blank');
+  closeTerms();
+}
+</script>
 
 <script src="/js/shop.js"></script>
 </body>
