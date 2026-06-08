@@ -2,29 +2,58 @@ const express = require('express');
 const session = require('express-session');
 const path    = require('path');
 const fs      = require('fs');
+const crypto  = require('crypto');
 
 const app  = express();
 const PORT = process.env.PORT || 8000;
 
-// ── Admin Credentials ──────────────────────────────────
-const ADMIN_USERNAME = 'zaraya';
-const ADMIN_PASSWORD = '123456';
+// ── Config (use env vars in production) ───────────────
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'zaraya';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '123456';
+const WA_NUMBER      = process.env.WA_NUMBER      || '917090702416';
+
+// ── Rate limiter (in-memory, resets on restart) ────────
+const _orderMap = new Map();
+function orderRateLimit(ip) {
+  const now = Date.now(), window = 60 * 60 * 1000, max = 5;
+  const e = _orderMap.get(ip);
+  if (!e || now > e.r) { _orderMap.set(ip, { c: 1, r: now + window }); return true; }
+  if (e.c >= max) return false;
+  e.c++;
+  return true;
+}
+setInterval(() => { const n = Date.now(); _orderMap.forEach((v, k) => { if (n > v.r) _orderMap.delete(k); }); }, 60 * 60 * 1000);
 
 // ── Data File ──────────────────────────────────────────
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 
 // ── Middleware ─────────────────────────────────────────
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Security headers
+app.use((req, res, next) => {
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  next();
+});
+
 app.use(session({
-  secret: 'zaraya-secret-2025',
+  secret: process.env.SESSION_SECRET || 'zaraya-secret-2025',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 }
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+    sameSite: 'strict'
+  }
 }));
 
 // ── SVG Jewel Helper (shared with EJS views) ───────────
@@ -222,6 +251,42 @@ app.post('/admin/products/:id/delete', requireAdmin, (req, res) => {
   let products = readProducts().filter(x => x.id != req.params.id);
   writeProducts(products);
   res.redirect('/admin/products');
+});
+
+// ── Order API (phone number never exposed to client) ──
+app.post('/api/order', (req, res) => {
+  // Honeypot: bots fill hidden fields, humans don't
+  if (req.body.website) return res.status(400).json({ error: 'Bad request' });
+
+  // Rate limit: max 5 orders per IP per hour
+  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  if (!orderRateLimit(ip)) {
+    return res.status(429).json({ error: 'Too many orders. Please wait before trying again.' });
+  }
+
+  const { items } = req.body;
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: 'Invalid cart' });
+  }
+
+  // Validate every item against live product list (prevents forged prices/names)
+  const products = readProducts();
+  const lines = [];
+  let total = 0;
+
+  for (const item of items.slice(0, 20)) {
+    const qty = Math.min(Math.max(parseInt(item.qty) || 1, 1), 99);
+    const product = products.find(p => p.name === String(item.name).trim() && p.visible && p.stock);
+    if (!product) continue;
+    const sub = product.price * qty;
+    lines.push(`• ${product.name} × ${qty} — ₹${sub.toLocaleString('en-IN')}`);
+    total += sub;
+  }
+
+  if (lines.length === 0) return res.status(400).json({ error: 'No valid items' });
+
+  const msg = `Hi Zaraya! I'd like to place an order:\n\n${lines.join('\n')}\n\nTotal: ₹${total.toLocaleString('en-IN')}\n\nI have read and agreed to the Terms & Conditions.`;
+  res.json({ url: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}` });
 });
 
 // ── Start ──────────────────────────────────────────────

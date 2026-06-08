@@ -146,6 +146,8 @@
       <input type="checkbox" id="terms-check" style="width:16px;height:16px;accent-color:#c9a84c;cursor:pointer;">
       <label for="terms-check" style="font-size:.78rem;color:rgba(245,233,200,.8);cursor:pointer;">I have read and agree to the Terms & Conditions</label>
     </div>
+    <!-- Honeypot: invisible to humans, bots fill it -->
+    <input type="text" id="order-hp" name="website" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;" tabindex="-1" autocomplete="off" aria-hidden="true" />
     <button id="terms-confirm" onclick="confirmOrder()" disabled style="margin-top:1.2rem;width:100%;padding:.9rem;background:#c9a84c;color:#072e24;border:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:not-allowed;opacity:.5;font-family:'Jost',sans-serif;">
       Confirm Order via WhatsApp
     </button>
@@ -155,6 +157,11 @@
 <script>
 let cart = JSON.parse(localStorage.getItem('zaraya-cart') || '[]');
 updateCartUI();
+
+// Escape HTML to prevent XSS when rendering cart items
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 
 function addToCart(name, price) {
   const existing = cart.find(i => i.name === name);
@@ -187,23 +194,22 @@ function updateCartUI() {
     itemsEl.innerHTML = cart.map(i => `
       <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid rgba(201,168,76,.1);">
         <div>
-          <p style="color:#f5e9c8;font-size:.82rem;">${i.name}</p>
-          <p style="color:rgba(201,168,76,.7);font-size:.72rem;">₹${i.price.toLocaleString()} × ${i.qty}</p>
+          <p style="color:#f5e9c8;font-size:.82rem;">${esc(i.name)}</p>
+          <p style="color:rgba(201,168,76,.7);font-size:.72rem;">₹${Number(i.price).toLocaleString()} × ${Number(i.qty)}</p>
         </div>
         <div style="display:flex;align-items:center;gap:.8rem;">
           <span style="color:#c9a84c;font-size:.85rem;">₹${(i.price * i.qty).toLocaleString()}</span>
-          <button onclick="removeFromCart('${i.name}')" style="background:none;border:none;color:rgba(201,168,76,.5);cursor:pointer;font-size:1rem;">✕</button>
+          <button data-name="${esc(i.name)}" onclick="removeFromCart(this.dataset.name)" style="background:none;border:none;color:rgba(201,168,76,.5);cursor:pointer;font-size:1rem;">✕</button>
         </div>
       </div>
     `).join('');
     const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-    document.getElementById('cart-total').innerHTML = `Total: ₹${total.toLocaleString()}`;
+    document.getElementById('cart-total').textContent = `Total: ₹${total.toLocaleString()}`;
   }
 }
 
 function openCart() {
-  const s = document.getElementById('cart-sidebar');
-  s.style.display = 'flex';
+  document.getElementById('cart-sidebar').style.display = 'flex';
 }
 function closeCart() {
   document.getElementById('cart-sidebar').style.display = 'none';
@@ -229,15 +235,42 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
   });
 });
-function confirmOrder() {
-  const lines = cart.map(i => `• ${i.name} × ${i.qty} — ₹${(i.price * i.qty).toLocaleString()}`).join('\n');
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const msg = `Hi Zaraya! I'd like to place an order:\n\n${lines}\n\nTotal: ₹${total.toLocaleString()}\n\nI have read and agreed to the Terms & Conditions.`;
-  window.open('https://wa.me/917090702416?text=' + encodeURIComponent(msg), '_blank');
-  closeTerms();
-  cart = [];
-  localStorage.removeItem('zaraya-cart');
-  updateCartUI();
+
+async function confirmOrder() {
+  const btn = document.getElementById('terms-confirm');
+  btn.disabled = true;
+  btn.style.opacity = '.7';
+  btn.textContent = 'Processing…';
+
+  try {
+    const res = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: cart,
+        website: document.getElementById('order-hp').value
+      })
+    });
+
+    if (res.status === 429) {
+      alert('You have placed too many orders recently. Please wait a while before trying again.');
+      btn.disabled = false; btn.style.opacity = '1'; btn.textContent = 'Confirm Order via WhatsApp';
+      return;
+    }
+    if (!res.ok) throw new Error('Server error');
+
+    const { url } = await res.json();
+    if (!url) throw new Error('No URL');
+
+    window.open(url, '_blank');
+    closeTerms();
+    cart = [];
+    localStorage.removeItem('zaraya-cart');
+    updateCartUI();
+  } catch(e) {
+    alert('Something went wrong. Please try again.');
+    btn.disabled = false; btn.style.opacity = '1'; btn.textContent = 'Confirm Order via WhatsApp';
+  }
 }
 </script>
 
