@@ -8,7 +8,7 @@
 <% } %>
 
 <div class="aform">
-  <form method="POST" action="/admin/products/add">
+  <form method="POST" action="/admin/products/add" enctype="multipart/form-data">
     <div class="aform-grid">
       <div class="aform-row span-2">
         <label class="af-lbl">Product Name *</label>
@@ -49,6 +49,19 @@
         </div>
       </div>
       <div class="aform-row span-2">
+        <label class="af-lbl">Product Photo <span style="color:#5a5a5a;font-weight:400;text-transform:none;letter-spacing:0">(jpg / png / webp, max 5 MB — optional)</span></label>
+        <div class="img-upload-wrap">
+          <label class="img-upload-label" for="imgInput">
+            <div class="img-preview" id="imgPreview">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" width="40" height="40"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p style="font-size:.72rem;color:#aaa;margin-top:.4rem">Click to choose photo</p>
+            </div>
+          </label>
+          <input type="file" id="imgInput" name="image" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="previewImg(this)"/>
+          <p id="imgName" style="font-size:.72rem;color:#5a5a5a;margin-top:.4rem;"></p>
+        </div>
+      </div>
+      <div class="aform-row span-2">
         <label class="af-lbl">Card Background Colour</label>
         <div class="cswatches">
           <label><input type="radio" name="color" value="#0d3a2c" checked style="display:none"/><div class="csw selected" style="background:#0d3a2c" title="Emerald" onclick="selectColor(this,'#0d3a2c')"></div></label>
@@ -71,6 +84,18 @@ function selectColor(el, val) {
   document.querySelectorAll('.csw').forEach(s => s.classList.remove('selected'));
   el.classList.add('selected');
   el.previousElementSibling.value = val;
+}
+function previewImg(input) {
+  const preview = document.getElementById('imgPreview');
+  const nameEl  = document.getElementById('imgName');
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:2px;" />`;
+    };
+    reader.readAsDataURL(input.files[0]);
+    nameEl.textContent = input.files[0].name;
+  }
 }
 </script>
 <%- include('../partials/admin-layout-end') %>

@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const multer  = require('multer');
 const path    = require('path');
 const fs      = require('fs');
 const crypto  = require('crypto');
@@ -25,7 +26,25 @@ function orderRateLimit(ip) {
 setInterval(() => { const n = Date.now(); _orderMap.forEach((v, k) => { if (n > v.r) _orderMap.delete(k); }); }, 60 * 60 * 1000);
 
 // ── Data File ──────────────────────────────────────────
-const DATA_FILE = path.join(__dirname, 'data', 'products.json');
+const DATA_FILE    = path.join(__dirname, 'data', 'products.json');
+const UPLOAD_DIR   = path.join(__dirname, 'public', 'img', 'products');
+
+// ── Multer (product image uploads) ────────────────────
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, UPLOAD_DIR),
+    filename:    (req, file, cb) => {
+      const ext  = path.extname(file.originalname).toLowerCase();
+      cb(null, Date.now() + '-' + crypto.randomBytes(6).toString('hex') + ext);
+    }
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    /^image\/(jpeg|png|webp|gif)$/.test(file.mimetype)
+      ? cb(null, true)
+      : cb(new Error('Only jpg, png, webp or gif images are allowed'));
+  }
+});
 
 // ── Middleware ─────────────────────────────────────────
 app.set('trust proxy', 1);
@@ -205,9 +224,10 @@ app.get('/admin/add', requireAdmin, (req, res) => {
 });
 
 // Add product – save
-app.post('/admin/products/add', requireAdmin, (req, res) => {
+app.post('/admin/products/add', requireAdmin, upload.single('image'), (req, res) => {
   const { name, cat, price, badge, stock, visible, bestseller, color } = req.body;
   if (!name || !price) {
+    if (req.file) fs.unlink(req.file.path, () => {});
     return res.render('admin/add', { page: 'add', success: false, error: 'Name and price are required.' });
   }
   const products = readProducts();
@@ -220,10 +240,29 @@ app.post('/admin/products/add', requireAdmin, (req, res) => {
     stock:      stock      === 'on',
     visible:    visible    === 'on',
     bestseller: bestseller === 'on' || badge === 'Bestseller',
-    color:      color      || '#0d3a2c'
+    color:      color      || '#0d3a2c',
+    image:      req.file   ? `/img/products/${req.file.filename}` : ''
   });
   writeProducts(products);
   res.render('admin/add', { page: 'add', success: true, error: null });
+});
+
+// Upload / replace product image
+app.post('/admin/products/:id/image', requireAdmin, upload.single('image'), (req, res) => {
+  if (!req.file) return res.redirect('/admin/products');
+  const products = readProducts();
+  const p = products.find(x => x.id == req.params.id);
+  if (p) {
+    if (p.image) {
+      const old = path.join(__dirname, 'public', p.image);
+      fs.unlink(old, () => {});
+    }
+    p.image = `/img/products/${req.file.filename}`;
+    writeProducts(products);
+  } else {
+    fs.unlink(req.file.path, () => {});
+  }
+  res.redirect('/admin/products');
 });
 
 // Toggle visibility
@@ -248,8 +287,12 @@ app.post('/admin/products/:id/toggle-stock', requireAdmin, (req, res) => {
 
 // Delete product
 app.post('/admin/products/:id/delete', requireAdmin, (req, res) => {
-  let products = readProducts().filter(x => x.id != req.params.id);
-  writeProducts(products);
+  const all = readProducts();
+  const target = all.find(x => x.id == req.params.id);
+  if (target && target.image) {
+    fs.unlink(path.join(__dirname, 'public', target.image), () => {});
+  }
+  writeProducts(all.filter(x => x.id != req.params.id));
   res.redirect('/admin/products');
 });
 
