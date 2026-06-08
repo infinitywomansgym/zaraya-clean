@@ -1,6 +1,6 @@
 nav{background:rgba(7,46,36,.97);backdrop-filter:blur(14px)}
 .nav-back{white-space:nowrap}
-.nav-logo-img{height:100px}
+.nav-logo-img{height:130px}
 .nav-back{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--au);border:1px solid rgba(201,168,76,.4);padding:.42rem 1rem;background:transparent;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:.4rem}
 .nav-back:hover{background:var(--au);color:var(--g)}
 .shop-hero{background:var(--g);padding:9rem 3.5rem 4rem;position:relative;overflow:hidden}
@@ -57,7 +57,7 @@ nav{background:rgba(7,46,36,.97);backdrop-filter:blur(14px)}
 
 /* Tablet (769px – 1024px) */
 @media (max-width: 1024px) {
-  .nav-logo-img { height: 88px; }
+  .nav-logo-img { height: 110px; }
   .shop-hero { padding: 8rem 2.5rem 3.5rem; }
   .cat-tabs { padding: 0 2rem; }
   .shop-body { padding: 2.5rem 2.5rem 4rem; }
@@ -66,7 +66,7 @@ nav{background:rgba(7,46,36,.97);backdrop-filter:blur(14px)}
 
 /* Mobile (≤768px) */
 @media (max-width: 768px) {
-  .nav-logo-img { height: 72px; }
+  .nav-logo-img { height: 90px; }
   .nav-back { font-size: .6rem; padding: .38rem .7rem; }
   .shop-hero { padding: 7rem 1.4rem 2.5rem; }
   .shop-title { font-size: clamp(1.9rem,7vw,2.8rem); }
@@ -84,7 +84,7 @@ nav{background:rgba(7,46,36,.97);backdrop-filter:blur(14px)}
 
 /* Small phones (≤480px) */
 @media (max-width: 480px) {
-  .nav-logo-img { height: 62px; }
+  .nav-logo-img { height: 76px; }
   .shop-hero { padding: 6.5rem 1rem 2rem; }
   .shop-body { padding: 1.8rem 1rem 3rem; }
   .shop-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
