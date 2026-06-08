@@ -9,8 +9,12 @@
 </head>
 <body>
 <div class="admin-layout">
+  <!-- Overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
   <!-- SIDEBAR -->
-  <div class="aside">
+  <div class="aside" id="adminSidebar">
+    <button class="aside-close" onclick="toggleSidebar()">✕</button>
     <a href="/admin" class="aside-brand">
       <img src="/img/logo.png" alt="Zaraya" style="height:80px;width:auto;object-fit:contain;" />
       <div>
@@ -40,7 +44,12 @@
   <!-- MAIN -->
   <div class="amain">
     <div class="atop">
-      <span class="atop-title"><%= title || 'Dashboard' %></span>
+      <div style="display:flex;align-items:center;gap:.75rem;">
+        <button class="ham-btn" onclick="toggleSidebar()" aria-label="Open menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="atop-title"><%= title || 'Dashboard' %></span>
+      </div>
       <span class="atop-date"><%= new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) %></span>
     </div>
     <div class="acontent">

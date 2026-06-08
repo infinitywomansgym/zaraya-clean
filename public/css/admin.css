@@ -13,6 +13,13 @@ body{background:#f2efe8;font-family:'Jost',sans-serif}
 .lb-back{font-size:.7rem;color:rgba(201,168,76,.38);text-decoration:none;display:inline-block;margin-top:.3rem;letter-spacing:.1em;transition:color .3s}
 .lb-back:hover{color:#c9a84c}
 
+/* ── Hamburger & Sidebar toggle ─────────────────────── */
+.ham-btn{display:none;background:none;border:none;cursor:pointer;color:#072e24;padding:.2rem;align-items:center;justify-content:center}
+.aside-close{display:none;position:absolute;top:.7rem;right:.8rem;background:none;border:none;color:rgba(201,168,76,.55);font-size:1.3rem;cursor:pointer;line-height:1;padding:.2rem}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:499}
+.sidebar-overlay.open{display:block}
+body.sidebar-open{overflow:hidden}
+
 /* Reset storefront nav styles inside admin */
 .aside-nav{position:static;top:auto;left:auto;right:auto;z-index:auto;background:transparent;backdrop-filter:none;padding:0;flex-direction:column;justify-content:flex-start;align-items:stretch;transition:none}
 .aside-nav.scrolled{background:transparent}
@@ -106,3 +113,51 @@ body{background:#f2efe8;font-family:'Jost',sans-serif}
 .ov-cat{font-size:.68rem;color:#5a5a5a;margin-left:.5rem}
 .ov-price{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:#0e4a3a}
 .ov-right{display:flex;align-items:center;gap:.6rem}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ══════════════════════════════════
+   ADMIN MOBILE RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Sidebar slides in from left */
+  .aside { transform:translateX(-100%); transition:transform .28s ease; z-index:500; }
+  .aside.open { transform:translateX(0); }
+  .aside-close { display:block; }
+
+  /* Main takes full width */
+  .amain { margin-left:0; }
+
+  /* Top bar */
+  .atop { padding:.7rem 1rem; }
+  .ham-btn { display:flex; }
+  .atop-date { display:none; }
+  .atop-title { font-size:1rem; }
+
+  /* Content padding */
+  .acontent { padding:1.2rem 1rem; }
+
+  /* Stats: 2 columns */
+  .stat-strip { grid-template-columns:1fr 1fr; gap:.75rem; }
+
+  /* Table: readable on small screens */
+  .admin-table th,.admin-table td { padding:.6rem .75rem; font-size:.75rem; }
+  .view-hdr { flex-direction:column; align-items:flex-start; gap:.75rem; }
+
+  /* Actions wrap */
+  .acts { flex-wrap:wrap; }
+
+  /* Form: single column */
+  .aform-grid { grid-template-columns:1fr; }
+  .span-2 { grid-column:span 1; }
+  .aform { padding:1.4rem 1rem; }
+
+  /* Buttons stack */
+  .aform-btns { flex-direction:column; }
+  .af-save,.af-cancel { width:100%; text-align:center; }
+}
+
+@media (max-width: 480px) {
+  .stat-strip { grid-template-columns:1fr 1fr; }
+  .acontent { padding:1rem .75rem; }
+  .atop { padding:.6rem .75rem; }
+}
