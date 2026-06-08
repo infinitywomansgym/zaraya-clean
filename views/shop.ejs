@@ -236,9 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 function confirmOrder() {
-  const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+  const lines = cart.map(i => `• ${i.name} × ${i.qty} — ₹${(i.price * i.qty).toLocaleString()}`).join('\n');
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const msg = `Hi Zaraya! I'd like to place an order for ${totalItems} item${totalItems !== 1 ? 's' : ''}, totalling ₹${total.toLocaleString()}. Please confirm my order.`;
+  const msg = `Hi Zaraya! I'd like to place an order:\n\n${lines}\n\nTotal: ₹${total.toLocaleString()}\n\nI have read and agreed to the Terms & Conditions.`;
   window.open('https://wa.me/917090702416?text=' + encodeURIComponent(msg), '_blank');
   closeTerms();
   cart = [];
