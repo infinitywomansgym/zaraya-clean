@@ -164,10 +164,13 @@ updateCartUI();
 
 function addToCart(name, price) {
   const existing = cart.find(i => i.name === name);
-  if (existing) { existing.qty++; } 
+  if (existing) { existing.qty++; }
   else { cart.push({ name, price, qty: 1 }); }
   updateCartUI();
-  openCart();
+  const badge = document.getElementById('cart-count');
+  badge.style.transition = 'transform .15s';
+  badge.style.transform = 'scale(1.5)';
+  setTimeout(() => { badge.style.transform = 'scale(1)'; }, 180);
 }
 
 function removeFromCart(name) {
@@ -233,14 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 function confirmOrder() {
-  const lines = cart.map(i => `• ${i.name} × ${i.qty} — ₹${(i.price * i.qty).toLocaleString()}`).join('\n');
+  const totalItems = cart.reduce((s, i) => s + i.qty, 0);
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const msg = `Hi Zaraya! I'd like to place an order:\n\n${lines}\n\nTotal: ₹${total.toLocaleString()}\n\nI have read and agreed to the Terms & Conditions.`;
+  const msg = `Hi Zaraya! I'd like to place an order for ${totalItems} item${totalItems !== 1 ? 's' : ''}, totalling ₹${total.toLocaleString()}. Please confirm my order.`;
   window.open('https://wa.me/917090702416?text=' + encodeURIComponent(msg), '_blank');
   closeTerms();
   cart = [];
   localStorage.removeItem('zaraya-cart');
-updateCartUI();
+  updateCartUI();
 }
 </script>
 
