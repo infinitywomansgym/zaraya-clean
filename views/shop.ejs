@@ -178,7 +178,6 @@ function removeFromCart(name) {
 function updateCartUI() {
   localStorage.setItem('zaraya-cart', JSON.stringify(cart));
   const count = cart.reduce((s, i) => s + i.qty, 0);
-  const count = cart.reduce((s, i) => s + i.qty, 0);
   document.getElementById('cart-count').textContent = count;
   const fab = document.getElementById('cart-fab');
   fab.style.display = count > 0 ? 'flex' : 'none';
