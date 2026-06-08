@@ -8,10 +8,14 @@ body{background:#f2efe8;font-family:'Jost',sans-serif}
 .lb-field{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:#f5e9c8;font-family:'Jost',sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none;transition:border-color .3s}
 .lb-field:focus{border-color:#c9a84c}
 .lb-field::placeholder{color:rgba(201,168,76,.28)}
-.lb-go{width:100%;padding:.88rem;background:#c9a84c;color:#072e24;border:none;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;margin-bottom:.75rem;font-weight:500;transition:background .3s}
+.lb-go{width:100%;padding:.88rem;background:#b49748;color:#072e24;border:none;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;margin-bottom:.75rem;font-weight:500;transition:background .3s}
 .lb-go:hover{background:#e0c878}
 .lb-back{font-size:.7rem;color:rgba(201,168,76,.38);text-decoration:none;display:inline-block;margin-top:.3rem;letter-spacing:.1em;transition:color .3s}
 .lb-back:hover{color:#c9a84c}
+
+/* Reset storefront nav styles inside admin */
+.aside-nav{position:static;top:auto;left:auto;right:auto;z-index:auto;background:transparent;backdrop-filter:none;padding:0;flex-direction:column;justify-content:flex-start;align-items:stretch;transition:none}
+.aside-nav.scrolled{background:transparent}
 
 /* LAYOUT */
 .admin-layout{display:flex;min-height:100vh}
