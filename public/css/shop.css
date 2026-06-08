@@ -1,4 +1,5 @@
 nav{background:rgba(7,46,36,.97);backdrop-filter:blur(14px)}
+.nav-back{white-space:nowrap}
 .nav-back{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--au);border:1px solid rgba(201,168,76,.4);padding:.42rem 1rem;background:transparent;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:.4rem}
 .nav-back:hover{background:var(--au);color:var(--g)}
 .shop-hero{background:var(--g);padding:9rem 3.5rem 4rem;position:relative;overflow:hidden}
@@ -48,3 +49,43 @@ nav{background:rgba(7,46,36,.97);backdrop-filter:blur(14px)}
 .sf-links a{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,168,76,.55);text-decoration:none;transition:color .3s}
 .sf-links a:hover{color:var(--au)}
 .sf-copy{font-size:.68rem;color:rgba(201,168,76,.3);letter-spacing:.08em}
+
+/* ══════════════════════════════════
+   SHOP RESPONSIVE
+══════════════════════════════════ */
+
+/* Tablet (769px – 1024px) */
+@media (max-width: 1024px) {
+  .shop-hero { padding: 8rem 2.5rem 3.5rem; }
+  .cat-tabs { padding: 0 2rem; }
+  .shop-body { padding: 2.5rem 2.5rem 4rem; }
+  .shop-footer { padding: 2.5rem 2.5rem; }
+}
+
+/* Mobile (≤768px) */
+@media (max-width: 768px) {
+  .nav-back { font-size: .6rem; padding: .38rem .7rem; }
+  .shop-hero { padding: 7rem 1.4rem 2.5rem; }
+  .shop-title { font-size: clamp(1.9rem,7vw,2.8rem); }
+  .cat-tabs { padding: 0 0.8rem; }
+  .cat-tab { padding: 1rem 1rem; font-size: .62rem; }
+  .shop-body { padding: 2rem 1.4rem 3.5rem; }
+  .shop-meta { flex-direction: column; align-items: flex-start; gap: .8rem; }
+  .shop-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+  .scard-body { padding: .9rem 1rem 1.1rem; }
+  .scard-name { font-size: 1rem; }
+  .scard-price { font-size: 1.05rem; }
+  .shop-footer { padding: 2.5rem 1.4rem; }
+  .sf-links { gap: 1.2rem; }
+}
+
+/* Small phones (≤480px) */
+@media (max-width: 480px) {
+  .shop-hero { padding: 6.5rem 1rem 2rem; }
+  .shop-body { padding: 1.8rem 1rem 3rem; }
+  .shop-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+  .cat-tabs { padding: 0 0.5rem; }
+  .cat-tab { padding: .9rem .7rem; font-size: .6rem; letter-spacing: .1em; }
+  .shop-footer { padding: 2rem 1rem; }
+  .sf-links { gap: .8rem; }
+}
