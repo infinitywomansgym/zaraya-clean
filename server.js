@@ -112,6 +112,19 @@ function makeJewelSVG(cat, col) {
                 <polygon points="150,51 159,60 150,69 141,60" fill="#e0c878"/>
                 <circle cx="240" cy="150" r="6" fill="#c9a84c" opacity=".7"/>
                 <circle cx="60" cy="150" r="6" fill="#c9a84c" opacity=".7"/>`,
+    Watches:   `<rect x="108" y="28" width="84" height="68" rx="10" fill="#c9a84c" opacity=".45"/>
+                <rect x="108" y="204" width="84" height="68" rx="10" fill="#c9a84c" opacity=".45"/>
+                <rect x="58" y="84" width="184" height="132" rx="28" stroke="#c9a84c" stroke-width="6" fill="none" opacity=".8"/>
+                <rect x="66" y="92" width="168" height="116" rx="22" fill="rgba(201,168,76,.05)"/>
+                <circle cx="150" cy="150" r="50" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity=".75"/>
+                <line x1="150" y1="102" x2="150" y2="114" stroke="#c9a84c" stroke-width="3" opacity=".8"/>
+                <line x1="198" y1="150" x2="186" y2="150" stroke="#c9a84c" stroke-width="3" opacity=".8"/>
+                <line x1="150" y1="198" x2="150" y2="186" stroke="#c9a84c" stroke-width="3" opacity=".8"/>
+                <line x1="102" y1="150" x2="114" y2="150" stroke="#c9a84c" stroke-width="3" opacity=".8"/>
+                <line x1="150" y1="150" x2="150" y2="124" stroke="#e0c878" stroke-width="3" stroke-linecap="round"/>
+                <line x1="150" y1="150" x2="168" y2="138" stroke="#e0c878" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="150" cy="150" r="4.5" fill="#c9a84c"/>
+                <rect x="240" y="144" width="14" height="18" rx="4" fill="#c9a84c" opacity=".65"/>`,
     default:   `<polygon points="150,50 178,100 240,100 195,140 210,195 150,162 90,195 105,140 60,100 122,100"
                   fill="none" stroke="#c9a84c" stroke-width="2" opacity=".85"/>
                 <circle cx="150" cy="150" r="10" fill="#c9a84c" opacity=".7"/>

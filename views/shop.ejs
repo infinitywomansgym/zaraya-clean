@@ -26,6 +26,7 @@
         Earrings:    'Our <em>Earrings</em>',
         Rings:       'Our <em>Rings</em>',
         Bangles:     'Our <em>Bangles</em>',
+        Watches:     'Our <em>Watches</em>',
         Bestsellers: '<em>Best Sellers</em>'
       };
       const subs = {
@@ -35,6 +36,7 @@
         Earrings:    'Studs & drops — effortless elegance.',
         Rings:       'Statement pieces for every finger.',
         Bangles:     'Stack them, layer them, love them.',
+        Watches:     'Timepieces that complement every look.',
         Bestsellers: 'The pieces everyone is wearing right now.'
       };
     %>
@@ -44,7 +46,7 @@
 </div>
 
 <div class="cat-tabs">
-  <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Bestsellers'].forEach(c => { %>
+  <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'].forEach(c => { %>
     <a href="/shop?cat=<%= c %>" class="cat-tab <%= cat === c ? 'active' : '' %>">
       <%= c === 'Bestsellers' ? '★ Best Sellers' : c %>
     </a>
@@ -108,7 +110,7 @@
 
 <div class="shop-footer">
   <div class="sf-links">
-    <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Bestsellers'].forEach(c => { %>
+    <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'].forEach(c => { %>
       <a href="/shop?cat=<%= c %>"><%= c === 'Bestsellers' ? 'Best Sellers' : c %></a>
     <% }) %>
   </div>
