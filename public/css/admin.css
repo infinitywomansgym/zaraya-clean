@@ -102,6 +102,10 @@ body.sidebar-open{overflow:hidden}
 .img-preview{width:160px;height:160px;border:2px dashed #ddd;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:border-color .2s;background:#faf8f4}
 .img-upload-label:hover .img-preview{border-color:#c9a84c}
 
+.cat-img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.2rem;margin-bottom:2rem}
+.cat-img-card{background:#fff;border:1px solid #e0dbd2;padding:1rem}
+.cat-img-preview{width:100%;aspect-ratio:1/1;background:#f2efe8;border:1px dashed #ddd;border-radius:4px;margin-bottom:.8rem;overflow:hidden}
+.cat-img-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:#072e24;margin-bottom:.7rem}
 .success-msg{background:#e6f4ec;border:1px solid #27ae60;color:#1a7a3a;padding:.75rem 1rem;font-size:.8rem;margin-bottom:1.2rem}
 .error-msg{background:#fde8e8;border:1px solid #e74c3c;color:#c0392b;padding:.75rem 1rem;font-size:.8rem;margin-bottom:1.2rem}
 .view-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem}

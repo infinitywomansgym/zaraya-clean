@@ -1,0 +1,41 @@
+<%- include('../partials/admin-layout', { title: 'Category Images', page: 'categories' }) %>
+
+<div class="view-hdr">
+  <span class="view-title">Category Cover Images</span>
+</div>
+
+<% if (success) { %>
+  <div class="success-msg">Category image updated successfully.</div>
+<% } %>
+
+<p style="font-size:.82rem;color:#5a5a5a;margin-bottom:1.8rem;line-height:1.7;">Upload a real photo for each category — it replaces the illustration on the homepage. Leave blank to keep the illustration.</p>
+
+<div class="cat-img-grid">
+  <% cats.forEach(cat => { %>
+  <div class="cat-img-card">
+    <div class="cat-img-preview">
+      <% if (catImages[cat]) { %>
+        <img src="<%= catImages[cat] %>" alt="<%= cat %>" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+      <% } else { %>
+        <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#bbb;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;">No photo</div>
+      <% } %>
+    </div>
+    <p class="cat-img-name"><%= cat === 'Bestsellers' ? 'Best Sellers' : cat %></p>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <form method="POST" action="/admin/categories/<%= cat %>/image" enctype="multipart/form-data">
+        <label class="aact a-show" style="cursor:pointer;white-space:nowrap;display:inline-block;">
+          📷 <%= catImages[cat] ? 'Replace' : 'Upload' %>
+          <input type="file" name="image" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="this.closest('form').submit()"/>
+        </label>
+      </form>
+      <% if (catImages[cat]) { %>
+      <form method="POST" action="/admin/categories/<%= cat %>/remove" onsubmit="return confirm('Remove the photo for <%= cat %>? The illustration will show instead.')">
+        <button class="aact a-del" type="submit">✕ Remove</button>
+      </form>
+      <% } %>
+    </div>
+  </div>
+  <% }) %>
+</div>
+
+<%- include('../partials/admin-layout-end') %>

@@ -28,8 +28,28 @@ setInterval(() => { const n = Date.now(); _orderMap.forEach((v, k) => { if (n > 
 // ── Data File ──────────────────────────────────────────
 const DATA_FILE    = path.join(__dirname, 'data', 'products.json');
 const UPLOAD_DIR   = path.join(__dirname, 'public', 'img', 'products');
+const CATS_FILE    = path.join(__dirname, 'data', 'categories.json');
+const CAT_DIR      = path.join(__dirname, 'public', 'img', 'categories');
+if (!fs.existsSync(CAT_DIR)) fs.mkdirSync(CAT_DIR, { recursive: true });
 
 // ── Multer (product image uploads) ────────────────────
+const catUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, CAT_DIR),
+    filename:    (req, file, cb) => {
+      const ext  = path.extname(file.originalname).toLowerCase();
+      const safe = (req.params.cat || 'cat').toLowerCase().replace(/[^a-z0-9]/g, '');
+      cb(null, 'cat-' + safe + '-' + Date.now() + ext);
+    }
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    /^image\/(jpeg|png|webp|gif)$/.test(file.mimetype)
+      ? cb(null, true)
+      : cb(new Error('Only jpg, png, webp or gif images are allowed'));
+  }
+});
+
 const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => cb(null, UPLOAD_DIR),
@@ -150,6 +170,13 @@ function readProducts() {
 function writeProducts(products) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(products, null, 2));
 }
+function readCatImages() {
+  try { return JSON.parse(fs.readFileSync(CATS_FILE, 'utf8')); }
+  catch { return {}; }
+}
+function saveCatImages(d) {
+  fs.writeFileSync(CATS_FILE, JSON.stringify(d, null, 2));
+}
 
 // ── Auth guard for admin routes ────────────────────────
 function requireAdmin(req, res, next) {
@@ -163,7 +190,7 @@ function requireAdmin(req, res, next) {
 
 // Home
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { catImages: readCatImages() });
 });
 
 // Shop – list products, filtered by category
@@ -307,6 +334,35 @@ app.post('/admin/products/:id/delete', requireAdmin, (req, res) => {
   }
   writeProducts(all.filter(x => x.id != req.params.id));
   res.redirect('/admin/products');
+});
+
+// ── Category image management ─────────────────────────
+const ALL_CATS = ['Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'];
+
+app.get('/admin/categories', requireAdmin, (req, res) => {
+  res.render('admin/categories', { catImages: readCatImages(), cats: ALL_CATS, page: 'categories', success: !!req.query.ok });
+});
+
+app.post('/admin/categories/:cat/image', requireAdmin, (req, res) => {
+  catUpload.single('image')(req, res, (err) => {
+    if (err || !req.file) return res.redirect('/admin/categories');
+    const cat = req.params.cat;
+    if (!ALL_CATS.includes(cat)) { fs.unlink(req.file.path, () => {}); return res.redirect('/admin/categories'); }
+    const imgs = readCatImages();
+    if (imgs[cat]) { fs.unlink(path.join(__dirname, 'public', imgs[cat]), () => {}); }
+    imgs[cat] = `/img/categories/${req.file.filename}`;
+    saveCatImages(imgs);
+    res.redirect('/admin/categories?ok=1');
+  });
+});
+
+app.post('/admin/categories/:cat/remove', requireAdmin, (req, res) => {
+  const cat = req.params.cat;
+  const imgs = readCatImages();
+  if (imgs[cat]) { fs.unlink(path.join(__dirname, 'public', imgs[cat]), () => {}); }
+  delete imgs[cat];
+  saveCatImages(imgs);
+  res.redirect('/admin/categories?ok=1');
 });
 
 // ── Order API (phone number never exposed to client) ──

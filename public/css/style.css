@@ -170,6 +170,7 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem}
   transform:none;
 }
 
+.cat-art-photo{width:100%;height:100%;object-fit:cover;display:block}
 .d1,.d2,.d3,.d4,.d5,.d6,.d7{
   transition-delay:0s;
 }

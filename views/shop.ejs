@@ -78,7 +78,14 @@
       <% products.forEach((p, i) => {
            const isBs = p.bestseller || p.badge === 'Bestseller';
       %>
-        <div class="scard rv" style="transition-delay:<%= i * 0.05 %>s">
+        <div class="scard rv" style="transition-delay:<%= i * 0.05 %>s"
+          data-name="<%= p.name %>"
+          data-price="<%= p.price %>"
+          data-cat="<%= p.cat %>"
+          data-badge="<%= p.badge || '' %>"
+          data-stock="<%= p.stock %>"
+          data-img="<%= p.image || '' %>"
+          onclick="openProduct(this)">
           <div class="scard-img">
             <% if (p.image) { %>
               <img src="<%= p.image %>" alt="<%= p.name %>" style="width:100%;height:100%;object-fit:cover;" />
@@ -97,7 +104,9 @@
             <p class="scard-name"><%= p.name %></p>
             <div class="scard-foot">
               <span class="scard-price">₹<%= p.price.toLocaleString() %></span>
-              <button class="scard-btn" <%= !p.stock ? 'disabled' : '' %> onclick="addToCart('<%= p.name %>', <%= p.price %>)">
+              <button class="scard-btn" <%= !p.stock ? 'disabled' : '' %>
+                data-name="<%= p.name %>" data-price="<%= p.price %>"
+                onclick="event.stopPropagation(); if(!this.disabled) addToCart(this.dataset.name, parseInt(this.dataset.price))">
                 <%= p.stock ? 'Add to Cart' : 'Out of Stock' %>
               </button>
             </div>
@@ -278,7 +287,61 @@ async function confirmOrder() {
     btn.disabled = false; btn.style.opacity = '1'; btn.textContent = 'Confirm Order via WhatsApp';
   }
 }
+
+function openProduct(card) {
+  const name  = card.dataset.name;
+  const price = parseInt(card.dataset.price);
+  const cat   = card.dataset.cat;
+  const badge = card.dataset.badge;
+  const stock = card.dataset.stock === 'true';
+  const img   = card.dataset.img;
+
+  document.getElementById('pp-name').textContent  = name;
+  document.getElementById('pp-price').textContent = '₹' + price.toLocaleString('en-IN');
+  document.getElementById('pp-cat').textContent   = cat + (badge ? ' · ' + badge : '');
+  const statusEl = document.getElementById('pp-status');
+  statusEl.textContent = stock ? '' : 'Currently Out of Stock';
+
+  const wrap = document.getElementById('pp-img-wrap');
+  if (img) {
+    wrap.innerHTML = '<img src="' + img + '" alt="' + esc(name) + '" style="width:100%;height:100%;object-fit:cover;display:block;"/>';
+  } else {
+    const src = card.querySelector('.scard-img');
+    wrap.innerHTML = src ? src.innerHTML : '';
+  }
+
+  const btn = document.getElementById('pp-btn');
+  btn.disabled = !stock;
+  btn.textContent = stock ? 'Add to Cart' : 'Out of Stock';
+  btn.onclick = stock ? () => { addToCart(name, price); closePopup(); } : null;
+
+  document.getElementById('pp-overlay').classList.add('active');
+  document.getElementById('prod-popup').classList.add('active');
+  document.body.classList.add('popup-open');
+}
+
+function closePopup() {
+  document.getElementById('pp-overlay').classList.remove('active');
+  document.getElementById('prod-popup').classList.remove('active');
+  document.body.classList.remove('popup-open');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 </script>
+
+<!-- Product Detail Popup -->
+<div id="pp-overlay" onclick="closePopup()"></div>
+<div id="prod-popup" role="dialog" aria-modal="true">
+  <button class="pp-close" onclick="closePopup()" aria-label="Close">✕</button>
+  <div id="pp-img-wrap"></div>
+  <div class="pp-body">
+    <span class="pp-cat-lbl" id="pp-cat"></span>
+    <h2 class="pp-name" id="pp-name"></h2>
+    <p class="pp-price" id="pp-price"></p>
+    <p class="pp-status" id="pp-status"></p>
+    <button class="pp-add-btn" id="pp-btn">Add to Cart</button>
+  </div>
+</div>
 
 <script src="/js/shop.js"></script>
 </body>
