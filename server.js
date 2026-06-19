@@ -281,26 +281,54 @@ app.post('/admin/products/add', requireAdmin, upload.single('image'), (req, res)
     visible:    visible    === 'on',
     bestseller: bestseller === 'on' || badge === 'Bestseller',
     color:      color      || '#0d3a2c',
-    image:      req.file   ? `/img/products/${req.file.filename}` : ''
+    image:      req.file   ? `/img/products/${req.file.filename}` : '',
+    images:     []
   });
   writeProducts(products);
   res.render('admin/add', { page: 'add', success: true, error: null });
 });
 
-// Upload / replace product image
+// Upload / replace product primary image
 app.post('/admin/products/:id/image', requireAdmin, upload.single('image'), (req, res) => {
   if (!req.file) return res.redirect('/admin/products');
   const products = readProducts();
   const p = products.find(x => x.id == req.params.id);
   if (p) {
-    if (p.image) {
-      const old = path.join(__dirname, 'public', p.image);
-      fs.unlink(old, () => {});
-    }
+    if (p.image) { fs.unlink(path.join(__dirname, 'public', p.image), () => {}); }
     p.image = `/img/products/${req.file.filename}`;
     writeProducts(products);
   } else {
     fs.unlink(req.file.path, () => {});
+  }
+  res.redirect('/admin/products');
+});
+
+// Add image to gallery
+app.post('/admin/products/:id/gallery', requireAdmin, upload.single('image'), (req, res) => {
+  if (!req.file) return res.redirect('/admin/products');
+  const products = readProducts();
+  const p = products.find(x => x.id == req.params.id);
+  if (p) {
+    if (!Array.isArray(p.images)) p.images = [];
+    p.images.push(`/img/products/${req.file.filename}`);
+    writeProducts(products);
+  } else {
+    fs.unlink(req.file.path, () => {});
+  }
+  res.redirect('/admin/products');
+});
+
+// Delete a gallery image by index
+app.post('/admin/products/:id/gallery/:idx/delete', requireAdmin, (req, res) => {
+  const products = readProducts();
+  const p = products.find(x => x.id == req.params.id);
+  if (p && Array.isArray(p.images)) {
+    const idx = parseInt(req.params.idx);
+    if (idx >= 0 && idx < p.images.length) {
+      fs.unlink(path.join(__dirname, 'public', p.images[idx]), () => {});
+      p.images.splice(idx, 1);
+      writeProducts(products);
+    }
   }
   res.redirect('/admin/products');
 });

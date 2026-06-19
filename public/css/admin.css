@@ -102,6 +102,15 @@ body.sidebar-open{overflow:hidden}
 .img-preview{width:160px;height:160px;border:2px dashed #ddd;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:border-color .2s;background:#faf8f4}
 .img-upload-label:hover .img-preview{border-color:#c9a84c}
 
+.prod-photos{display:flex;gap:5px;flex-wrap:wrap;align-items:flex-start}
+.photo-thumb{width:54px;height:54px;position:relative;overflow:hidden;border-radius:3px;flex-shrink:0}
+.primary-photo{border:2px solid #c9a84c}
+.gallery-photo{border:1px solid #ddd}
+.photo-empty{width:100%;height:100%;background:#f2efe8;display:flex;align-items:center;justify-content:center;font-size:.52rem;color:#aaa;text-align:center;letter-spacing:.05em;text-transform:uppercase}
+.photo-overlay{position:absolute;inset:0;background:rgba(7,46,36,.5);color:#e0c878;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.primary-photo:hover .photo-overlay{opacity:1}
+.photo-add{border:1px dashed #c9a84c;background:rgba(201,168,76,.04)}
+.photo-del{position:absolute;top:2px;right:2px;width:16px;height:16px;background:rgba(231,76,60,.9);border:none;color:#fff;cursor:pointer;font-size:.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;z-index:2}
 .cat-img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.2rem;margin-bottom:2rem}
 .cat-img-card{background:#fff;border:1px solid #e0dbd2;padding:1rem}
 .cat-img-preview{width:100%;aspect-ratio:1/1;background:#f2efe8;border:1px dashed #ddd;border-radius:4px;margin-bottom:.8rem;overflow:hidden}

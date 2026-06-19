@@ -85,6 +85,7 @@
           data-badge="<%= p.badge || '' %>"
           data-stock="<%= p.stock %>"
           data-img="<%= p.image || '' %>"
+          data-images="<%= JSON.stringify([p.image, ...(p.images||[])].filter(Boolean)) %>"
           onclick="openProduct(this)">
           <div class="scard-img">
             <% if (p.image) { %>
@@ -288,27 +289,53 @@ async function confirmOrder() {
   }
 }
 
+/* ── Gallery state ── */
+let ppImages = [], ppIdx = 0, ppTouchX = null;
+
+function ppGoTo(idx) {
+  ppIdx = Math.max(0, Math.min(idx, ppImages.length - 1));
+  document.getElementById('pp-slides').style.transform = 'translateX(' + (-ppIdx * 100) + '%)';
+  document.querySelectorAll('.pp-dot').forEach((d, i) => d.classList.toggle('active', i === ppIdx));
+  const prev = document.getElementById('pp-prev'), next = document.getElementById('pp-next');
+  if (prev) prev.style.display = ppImages.length > 1 && ppIdx > 0 ? 'flex' : 'none';
+  if (next) next.style.display = ppImages.length > 1 && ppIdx < ppImages.length - 1 ? 'flex' : 'none';
+}
+
 function openProduct(card) {
   const name  = card.dataset.name;
   const price = parseInt(card.dataset.price);
   const cat   = card.dataset.cat;
   const badge = card.dataset.badge;
   const stock = card.dataset.stock === 'true';
-  const img   = card.dataset.img;
+  let   imgs  = [];
+  try { imgs = JSON.parse(card.dataset.images || '[]'); } catch {}
+  if (imgs.length === 0 && card.dataset.img) imgs = [card.dataset.img];
 
   document.getElementById('pp-name').textContent  = name;
   document.getElementById('pp-price').textContent = '₹' + price.toLocaleString('en-IN');
   document.getElementById('pp-cat').textContent   = cat + (badge ? ' · ' + badge : '');
-  const statusEl = document.getElementById('pp-status');
-  statusEl.textContent = stock ? '' : 'Currently Out of Stock';
+  document.getElementById('pp-status').textContent = stock ? '' : 'Currently Out of Stock';
 
-  const wrap = document.getElementById('pp-img-wrap');
-  if (img) {
-    wrap.innerHTML = '<img src="' + img + '" alt="' + esc(name) + '" style="width:100%;height:100%;object-fit:cover;display:block;"/>';
+  const slides = document.getElementById('pp-slides');
+  const dots   = document.getElementById('pp-dots');
+  if (imgs.length > 0) {
+    slides.innerHTML = imgs.map(src =>
+      '<div class="pp-slide"><img src="' + src + '" alt="' + esc(name) + '"/></div>'
+    ).join('');
+    dots.innerHTML = imgs.length > 1 ? imgs.map((_, i) =>
+      '<button class="pp-dot' + (i === 0 ? ' active' : '') + '" onclick="ppGoTo(' + i + ')"></button>'
+    ).join('') : '';
   } else {
-    const src = card.querySelector('.scard-img');
-    wrap.innerHTML = src ? src.innerHTML : '';
+    const srcEl = card.querySelector('.scard-img');
+    slides.innerHTML = '<div class="pp-slide">' + (srcEl ? srcEl.innerHTML : '') + '</div>';
+    dots.innerHTML = '';
   }
+  ppImages = imgs;
+  ppIdx = 0;
+  slides.style.transform = 'translateX(0)';
+  const prev = document.getElementById('pp-prev'), next = document.getElementById('pp-next');
+  if (prev) prev.style.display = 'none';
+  if (next) next.style.display = imgs.length > 1 ? 'flex' : 'none';
 
   const btn = document.getElementById('pp-btn');
   btn.disabled = !stock;
@@ -327,13 +354,31 @@ function closePopup() {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+
+/* Touch swipe for gallery */
+document.addEventListener('touchstart', e => {
+  if (!document.getElementById('prod-popup').classList.contains('active')) return;
+  ppTouchX = e.touches[0].clientX;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  if (ppTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - ppTouchX;
+  if (dx < -40) ppGoTo(ppIdx + 1);
+  else if (dx > 40) ppGoTo(ppIdx - 1);
+  ppTouchX = null;
+});
 </script>
 
 <!-- Product Detail Popup -->
 <div id="pp-overlay" onclick="closePopup()"></div>
 <div id="prod-popup" role="dialog" aria-modal="true">
   <button class="pp-close" onclick="closePopup()" aria-label="Close">✕</button>
-  <div id="pp-img-wrap"></div>
+  <div id="pp-img-wrap">
+    <div class="pp-slides" id="pp-slides"></div>
+    <div class="pp-dots" id="pp-dots"></div>
+    <button class="pp-arr pp-prev" id="pp-prev" onclick="ppGoTo(ppIdx-1)" style="display:none">&#8249;</button>
+    <button class="pp-arr pp-next" id="pp-next" onclick="ppGoTo(ppIdx+1)" style="display:none">&#8250;</button>
+  </div>
   <div class="pp-body">
     <span class="pp-cat-lbl" id="pp-cat"></span>
     <h2 class="pp-name" id="pp-name"></h2>
