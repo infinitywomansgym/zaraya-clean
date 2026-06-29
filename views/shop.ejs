@@ -127,44 +127,44 @@
   <p class="sf-copy">© 2025 Zaraya Jewellery · The Jewellery House · Calicut, Kerala</p>
 </div>
 <!-- Cart Button -->
-<div id="cart-fab" onclick="openCart()" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:900;background:#B8922A;color:#072e24;border:none;padding:.9rem 1.6rem;cursor:pointer;font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;">
-  <span>🛒 Cart</span><span id="cart-count" style="background:#072e24;color:#B8922A;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.68rem;">0</span>
+<div id="cart-fab" onclick="openCart()" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:900;background:#A87828;color:#072e24;border:none;padding:.9rem 1.6rem;cursor:pointer;font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;">
+  <span>🛒 Cart</span><span id="cart-count" style="background:#072e24;color:#A87828;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.68rem;">0</span>
 </div>
 
 <!-- Cart Sidebar -->
-<div id="cart-sidebar" style="display:none;position:fixed;top:0;right:0;width:340px;height:100vh;background:#072e24;border-left:1px solid rgba(184,146,42,.3);z-index:998;padding:2rem;overflow-y:auto;flex-direction:column;">
+<div id="cart-sidebar" style="display:none;position:fixed;top:0;right:0;width:340px;height:100vh;background:#072e24;border-left:1px solid rgba(168,120,40,.3);z-index:998;padding:2rem;overflow-y:auto;flex-direction:column;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-    <h2 style="font-family:'Cormorant Garamond',serif;color:#B8922A;font-size:1.4rem;font-weight:300;">Your Cart</h2>
-    <button onclick="closeCart()" style="background:none;border:none;color:#B8922A;font-size:1.4rem;cursor:pointer;">✕</button>
+    <h2 style="font-family:'Cormorant Garamond',serif;color:#A87828;font-size:1.4rem;font-weight:300;">Your Cart</h2>
+    <button onclick="closeCart()" style="background:none;border:none;color:#A87828;font-size:1.4rem;cursor:pointer;">✕</button>
   </div>
   <div id="cart-items" style="flex:1;"></div>
-  <div id="cart-total" style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(184,146,42,.2);font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#B8922A;"></div>
-  <button onclick="proceedToOrder()" id="order-btn" style="margin-top:1.2rem;width:100%;padding:.9rem;background:#B8922A;color:#072e24;border:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;">Place Order</button>
+  <div id="cart-total" style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(168,120,40,.2);font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#A87828;"></div>
+  <button onclick="proceedToOrder()" id="order-btn" style="margin-top:1.2rem;width:100%;padding:.9rem;background:#A87828;color:#072e24;border:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;">Place Order</button>
 </div>
 
 <!-- Terms Modal -->
 <div id="terms-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;align-items:center;justify-content:center;">
-  <div style="background:#072e24;border:1px solid rgba(184,146,42,.3);max-width:560px;width:90%;max-height:80vh;overflow-y:auto;padding:2.5rem;position:relative;">
-    <button onclick="closeTerms()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:#B8922A;font-size:1.4rem;cursor:pointer;">✕</button>
-    <h2 style="font-family:'Cormorant Garamond',serif;color:#B8922A;font-size:1.6rem;font-weight:300;margin-bottom:1.5rem;">Terms & Conditions</h2>
+  <div style="background:#072e24;border:1px solid rgba(168,120,40,.3);max-width:560px;width:90%;max-height:80vh;overflow-y:auto;padding:2.5rem;position:relative;">
+    <button onclick="closeTerms()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:#A87828;font-size:1.4rem;cursor:pointer;">✕</button>
+    <h2 style="font-family:'Cormorant Garamond',serif;color:#A87828;font-size:1.6rem;font-weight:300;margin-bottom:1.5rem;">Terms & Conditions</h2>
     <div style="font-size:.78rem;color:rgba(245,233,200,.75);line-height:1.9;">
-      <p><strong style="color:#B8922A;">1. Skin & Allergy Awareness</strong><br>Our jewelry products are crafted to be safe for all skin types. However, customers are advised to be aware of their personal skin conditions and allergies prior to use. We recommend conducting a patch test to identify any potential allergic reactions before prolonged or continuous wear.</p><br>
-      <p><strong style="color:#B8922A;">2. Health and Liability Disclaimer</strong><br>We disclaim responsibility for any health complications, allergic reactions, or other adverse effects arising from the use of our products. Customers should consult a healthcare professional if uncertain about skin sensitivities.</p><br>
-      <p><strong style="color:#B8922A;">3. Payment Terms</strong><br>Full payment must be completed prior to order confirmation. No orders will be processed after receipt of full payment.</p><br>
-      <p><strong style="color:#B8922A;">4. Order Confirmation and Cancellation</strong><br>All orders are subject to availability and final confirmation. We reserve the right to cancel any order for reasons beyond our control such as stock shortages or payment failures. Customers may cancel orders within 24 hours of confirmation; cancellations beyond this timeframe will be handled on a case-by-case basis.</p><br>
-      <p><strong style="color:#B8922A;">5. Customer Responsibility</strong><br>Customers are responsible for inspecting the product at the time of pickup. Any visible defects or discrepancies should be reported immediately to facilitate prompt resolution.</p><br>
-      <p><strong style="color:#B8922A;">6. Refund Policy</strong><br>Refunds outside of the guarantee period are subject to individual evaluation. All refund requests require presentation of the original purchase receipt and intact packaging. Zaraya jewelry reserves the right to approve or deny refund requests based on the condition of the returned product.</p><br>
-      <p><strong style="color:#B8922A;">7. Guarantee</strong><br>All items purchased from Zaraya jewelry are covered by a manufacturer's guarantee valid for 30 days from the date of purchase. This guarantee protects against any defects in material or workmanship under normal use.</p><br>
-      <p><strong style="color:#B8922A;">8. Replacement Policy</strong><br>In the event a product exhibits defects covered under the guarantee, we will replace the item with the identical design. Should the same design be unavailable due to stock limitations, a replacement with an alternative design of equal value will be offered. If neither option is feasible, a refund will be processed as a last resort.</p><br>
-      <p><strong style="color:#B8922A;">9. Damage and Misuse</strong><br>Zaraya jewelry is not liable for any damage resulting from misuse, neglect, accidents, physical abuse, or improper handling of the product. Any physical damage caused by harsh usage is excluded from the guarantee.</p>
+      <p><strong style="color:#A87828;">1. Skin & Allergy Awareness</strong><br>Our jewelry products are crafted to be safe for all skin types. However, customers are advised to be aware of their personal skin conditions and allergies prior to use. We recommend conducting a patch test to identify any potential allergic reactions before prolonged or continuous wear.</p><br>
+      <p><strong style="color:#A87828;">2. Health and Liability Disclaimer</strong><br>We disclaim responsibility for any health complications, allergic reactions, or other adverse effects arising from the use of our products. Customers should consult a healthcare professional if uncertain about skin sensitivities.</p><br>
+      <p><strong style="color:#A87828;">3. Payment Terms</strong><br>Full payment must be completed prior to order confirmation. No orders will be processed after receipt of full payment.</p><br>
+      <p><strong style="color:#A87828;">4. Order Confirmation and Cancellation</strong><br>All orders are subject to availability and final confirmation. We reserve the right to cancel any order for reasons beyond our control such as stock shortages or payment failures. Customers may cancel orders within 24 hours of confirmation; cancellations beyond this timeframe will be handled on a case-by-case basis.</p><br>
+      <p><strong style="color:#A87828;">5. Customer Responsibility</strong><br>Customers are responsible for inspecting the product at the time of pickup. Any visible defects or discrepancies should be reported immediately to facilitate prompt resolution.</p><br>
+      <p><strong style="color:#A87828;">6. Refund Policy</strong><br>Refunds outside of the guarantee period are subject to individual evaluation. All refund requests require presentation of the original purchase receipt and intact packaging. Zaraya jewelry reserves the right to approve or deny refund requests based on the condition of the returned product.</p><br>
+      <p><strong style="color:#A87828;">7. Guarantee</strong><br>All items purchased from Zaraya jewelry are covered by a manufacturer's guarantee valid for 30 days from the date of purchase. This guarantee protects against any defects in material or workmanship under normal use.</p><br>
+      <p><strong style="color:#A87828;">8. Replacement Policy</strong><br>In the event a product exhibits defects covered under the guarantee, we will replace the item with the identical design. Should the same design be unavailable due to stock limitations, a replacement with an alternative design of equal value will be offered. If neither option is feasible, a refund will be processed as a last resort.</p><br>
+      <p><strong style="color:#A87828;">9. Damage and Misuse</strong><br>Zaraya jewelry is not liable for any damage resulting from misuse, neglect, accidents, physical abuse, or improper handling of the product. Any physical damage caused by harsh usage is excluded from the guarantee.</p>
     </div>
     <div style="margin-top:1.8rem;display:flex;align-items:center;gap:.8rem;">
-      <input type="checkbox" id="terms-check" style="width:16px;height:16px;accent-color:#B8922A;cursor:pointer;">
+      <input type="checkbox" id="terms-check" style="width:16px;height:16px;accent-color:#A87828;cursor:pointer;">
       <label for="terms-check" style="font-size:.78rem;color:rgba(245,233,200,.8);cursor:pointer;">I have read and agree to the Terms & Conditions</label>
     </div>
     <!-- Honeypot: invisible to humans, bots fill it -->
     <input type="text" id="order-hp" name="website" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;" tabindex="-1" autocomplete="off" aria-hidden="true" />
-    <button id="terms-confirm" onclick="confirmOrder()" disabled style="margin-top:1.2rem;width:100%;padding:.9rem;background:#B8922A;color:#072e24;border:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:not-allowed;opacity:.5;font-family:'Jost',sans-serif;">
+    <button id="terms-confirm" onclick="confirmOrder()" disabled style="margin-top:1.2rem;width:100%;padding:.9rem;background:#A87828;color:#072e24;border:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:not-allowed;opacity:.5;font-family:'Jost',sans-serif;">
       Confirm Order via WhatsApp
     </button>
   </div>
@@ -208,14 +208,14 @@ function updateCartUI() {
     document.getElementById('cart-total').textContent = '';
   } else {
     itemsEl.innerHTML = cart.map(i => `
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid rgba(184,146,42,.1);">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid rgba(168,120,40,.1);">
         <div>
           <p style="color:#f5e9c8;font-size:.82rem;">${esc(i.name)}</p>
-          <p style="color:rgba(184,146,42,.7);font-size:.72rem;">₹${Number(i.price).toLocaleString()} × ${Number(i.qty)}</p>
+          <p style="color:rgba(168,120,40,.7);font-size:.72rem;">₹${Number(i.price).toLocaleString()} × ${Number(i.qty)}</p>
         </div>
         <div style="display:flex;align-items:center;gap:.8rem;">
-          <span style="color:#B8922A;font-size:.85rem;">₹${(i.price * i.qty).toLocaleString()}</span>
-          <button data-name="${esc(i.name)}" onclick="removeFromCart(this.dataset.name)" style="background:none;border:none;color:rgba(184,146,42,.5);cursor:pointer;font-size:1rem;">✕</button>
+          <span style="color:#A87828;font-size:.85rem;">₹${(i.price * i.qty).toLocaleString()}</span>
+          <button data-name="${esc(i.name)}" onclick="removeFromCart(this.dataset.name)" style="background:none;border:none;color:rgba(168,120,40,.5);cursor:pointer;font-size:1rem;">✕</button>
         </div>
       </div>
     `).join('');
