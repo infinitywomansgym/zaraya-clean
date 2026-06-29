@@ -46,9 +46,9 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 /* Ornamental divider */
 .h-ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:0 auto 1.6rem;animation:fin 1.8s .44s forwards;opacity:0}
 .h-orn-line{display:block;height:1px;width:90px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.55),transparent)}
-.h-orn-gem{font-size:.55rem;background:linear-gradient(135deg,#8B6914,#C9A84C,#F5E17D,#C9A84C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.h-orn-gem{font-size:.55rem;color:rgba(201,168,76,.75);display:block}
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1;color:#fff;margin-bottom:.5rem;animation:fin 1.8s .6s forwards;opacity:0}
-.h-title em{font-style:italic;background:linear-gradient(135deg,#8B6914 0%,#C9A84C 30%,#F5E690 55%,#C9A84C 75%,#8B6914 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.h-title em{font-style:italic;color:var(--au)}
 .h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:3rem;animation:fin 1.8s .8s forwards;opacity:0}
 .h-ar{font-size:1.05rem;color:var(--au);margin-bottom:3rem;animation:fin 1.8s .9s forwards;opacity:0}
 .h-ctas{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;animation:fin 1.8s 1s forwards;opacity:0}
@@ -58,14 +58,14 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 @keyframes sla{0%,100%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(.5)}}
 
 /* BUTTONS */
-.btn-g{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:linear-gradient(135deg,#7A5900 0%,#C9A84C 35%,#F5E690 55%,#C9A84C 75%,#7A5900 100%);padding:1rem 2.5rem;text-decoration:none;transition:transform .3s;position:relative;overflow:hidden;font-weight:500}
+.btn-g{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:#C9A84C;padding:1rem 2.5rem;text-decoration:none;transition:transform .3s,background .3s;position:relative;overflow:hidden;font-weight:500}
 .btn-g::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.2);transform:translateX(-101%);transition:transform .4s}
 .btn-g:hover::after{transform:translateX(0)}.btn-g:hover{transform:translateY(-2px)}
 .btn-o{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--au);border:1px solid rgba(201,168,76,.5);padding:1rem 2.5rem;text-decoration:none;transition:border-color .3s,transform .3s}
 .btn-o:hover{border-color:var(--au);transform:translateY(-2px)}
 
 /* MARQUEE */
-.mbar{background:linear-gradient(90deg,#5C3D00,#9A7420,#C9A84C,#F5E690,#C9A84C,#9A7420,#5C3D00);padding:.7rem 0;overflow:hidden;display:flex}
+.mbar{background:#C9A84C;padding:.7rem 0;overflow:hidden;display:flex}
 .mtrack{display:flex;animation:mq 28s linear infinite;white-space:nowrap}
 .mtrack span{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:#072e24;padding:0 2rem;font-weight:500}
 .dot{opacity:.4}
