@@ -1,6 +1,6 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--g:#072e24;--g2:#0e4a3a;--g3:#155c48;--au:#C9A84C;--al:#E8CA6A;;--ap:#f5e9c8;--cr:#fdf8ef;--tx:#1a1a1a;--tl:#5a5a5a}
+:root{--g:#072e24;--g2:#0e4a3a;--g3:#155c48;--au:#C9A84C;--al:#C9A84C;--ap:#f5e9c8;--cr:#fdf8ef;--tx:#1a1a1a;--tl:#5a5a5a}
 html{scroll-behavior:smooth}
 body{font-family:'Jost',sans-serif;background:var(--cr);color:var(--tx);overflow-x:hidden}
 
