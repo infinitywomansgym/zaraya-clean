@@ -35,8 +35,18 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 .hero-inner{position:relative;z-index:2;text-align:center;padding:0 2rem;animation:henter 1.4s cubic-bezier(.16,1,.3,1) forwards;opacity:0}
 @keyframes henter{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fin{to{opacity:1}}
-.h-eye{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--au);margin-bottom:.0rem;animation:fin 1.8s .3s forwards;opacity:0}
-.h-mark{margin:0 auto -5rem;animation:fin 1.8s .5s forwards;opacity:0}
+/* Logo emblem with decorative rings */
+.h-emblem{position:relative;width:200px;height:200px;margin:0 auto 2.4rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
+.h-emblem-glow{position:absolute;width:270px;height:270px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(201,168,76,.18) 0%,transparent 65%);border-radius:50%;animation:hglow 3.5s ease-in-out infinite alternate;pointer-events:none}
+@keyframes hglow{from{opacity:.5;transform:translate(-50%,-50%) scale(.88)}to{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}
+.h-emblem-ring{position:absolute;border-radius:50%}
+.h-emblem-ring.r1{inset:-14px;border:1px solid rgba(201,168,76,.28);animation:pring 5s ease-in-out infinite}
+.h-emblem-ring.r2{inset:-30px;border:1px solid rgba(201,168,76,.11);animation:pring 5s ease-in-out infinite;animation-delay:2.5s}
+.h-logo-img{height:178px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 5px 24px rgba(201,168,76,.3))}
+/* Ornamental divider */
+.h-ornament{display:flex;align-items:center;gap:.9rem;justify-content:center;margin:0 auto 2rem;animation:fin 1.8s .44s forwards;opacity:0}
+.h-orn-line{display:block;height:1px;width:72px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5),transparent)}
+.h-orn-gem{font-size:.5rem;color:rgba(201,168,76,.7);display:block}
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1;color:#fff;margin-bottom:.5rem;animation:fin 1.8s .6s forwards;opacity:0}
 .h-title em{font-style:italic;color:var(--al)}
 .h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:3rem;animation:fin 1.8s .8s forwards;opacity:0}
@@ -201,6 +211,9 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem}
   .nav-shop { padding: .4rem .8rem; font-size: .62rem; }
   .nav-admin { padding: .35rem .7rem; font-size: .6rem; }
   .hero-inner { padding: 0 1.2rem; }
+  .h-emblem { width: 158px; height: 158px; margin-bottom: 1.8rem; }
+  .h-logo-img { height: 140px; }
+  .h-orn-line { width: 50px; }
   .h-title { font-size: clamp(2.8rem,10vw,4.5rem); }
   .h-sub { font-size: .95rem; margin-bottom: 2rem; }
   .h-ar { font-size: .9rem; margin-bottom: 2rem; }
@@ -227,6 +240,9 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem}
 @media (max-width: 480px) {
   nav { padding: 0.5rem 1rem; }
   .nav-logo-img { height: 50px; }
+  .h-emblem { width: 130px; height: 130px; margin-bottom: 1.4rem; }
+  .h-logo-img { height: 114px; }
+  .h-orn-line { width: 36px; }
   .h-title { font-size: clamp(2.2rem,9vw,3.5rem); }
   .psteps { grid-template-columns: 1fr; }
   .fgrid { grid-template-columns: 1fr; }
