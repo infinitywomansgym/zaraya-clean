@@ -1,8 +1,0 @@
-[
-  { "id":1, "name":"The Celestial Bracelet",  "cat":"Bracelets", "price":1299, "badge":"New Arrival", "stock":true,  "visible":true,  "bestseller":false, "color":"#0d3a2c" },
-  { "id":2, "name":"Minimalist Gold Chain",   "cat":"Necklaces", "price":899,  "badge":"Bestseller",  "stock":true,  "visible":true,  "bestseller":true,  "color":"#0a2a40" },
-  { "id":3, "name":"Classic Stacked Bangle",  "cat":"Bangles",   "price":1099, "badge":"",            "stock":false, "visible":false, "bestseller":false, "color":"#0b3830" },
-  { "id":4, "name":"Solitaire Statement Ring","cat":"Rings",     "price":749,  "badge":"Popular",     "stock":true,  "visible":true,  "bestseller":true,  "color":"#0e3d2e" },
-  { "id":5, "name":"Pearl Drop Earrings",     "cat":"Earrings",  "price":649,  "badge":"New Arrival", "stock":true,  "visible":true,  "bestseller":false, "color":"#3a0d1a" },
-  { "id":6, "name":"Dainty Pendant Necklace", "cat":"Necklaces", "price":799,  "badge":"Bestseller",  "stock":true,  "visible":true,  "bestseller":true,  "color":"#0a2a40" }
-]

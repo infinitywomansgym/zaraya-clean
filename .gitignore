@@ -1,0 +1,15 @@
+node_modules/
+
+# Product & category data — lives on the server, never overwritten by git
+data/products.json
+data/categories.json
+
+# Uploaded images — live on the server, never overwritten by git
+public/img/products/*
+public/img/categories/*
+
+# Keep the directories themselves in git
+!public/img/products/.gitkeep
+!public/img/categories/.gitkeep
+
+.env

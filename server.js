@@ -30,7 +30,11 @@ const DATA_FILE    = path.join(__dirname, 'data', 'products.json');
 const UPLOAD_DIR   = path.join(__dirname, 'public', 'img', 'products');
 const CATS_FILE    = path.join(__dirname, 'data', 'categories.json');
 const CAT_DIR      = path.join(__dirname, 'public', 'img', 'categories');
-if (!fs.existsSync(CAT_DIR)) fs.mkdirSync(CAT_DIR, { recursive: true });
+fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+fs.mkdirSync(CAT_DIR, { recursive: true });
+if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]', 'utf8');
+if (!fs.existsSync(CATS_FILE)) fs.writeFileSync(CATS_FILE, '{}', 'utf8');
 
 // ── Multer (product image uploads) ────────────────────
 const catUpload = multer({
