@@ -45,12 +45,14 @@
   </div>
 </div>
 
-<div class="cat-tabs">
-  <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'].forEach(c => { %>
-    <a href="/shop?cat=<%= c %>" class="cat-tab <%= cat === c ? 'active' : '' %>">
-      <%= c === 'Bestsellers' ? '★ Best Sellers' : c %>
-    </a>
-  <% }) %>
+<div class="cat-tabs-wrap">
+  <div class="cat-tabs">
+    <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'].forEach(c => { %>
+      <a href="/shop?cat=<%= c %>" class="cat-tab <%= cat === c ? 'active' : '' %>">
+        <%= c === 'Bestsellers' ? '★ Best Sellers' : c %>
+      </a>
+    <% }) %>
+  </div>
 </div>
 
 <div class="shop-body">
@@ -243,6 +245,10 @@ function proceedToOrder() {
 function closeTerms() {
   document.getElementById('terms-modal').style.display = 'none';
 }
+document.addEventListener('DOMContentLoaded', () => {
+  const activeTab = document.querySelector('.cat-tab.active');
+  if (activeTab) activeTab.scrollIntoView({ inline: 'center', block: 'nearest' });
+});
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('terms-check').addEventListener('change', function() {
     const btn = document.getElementById('terms-confirm');
