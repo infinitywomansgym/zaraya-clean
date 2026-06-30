@@ -246,10 +246,6 @@ function closeTerms() {
   document.getElementById('terms-modal').style.display = 'none';
 }
 document.addEventListener('DOMContentLoaded', () => {
-  const activeTab = document.querySelector('.cat-tab.active');
-  if (activeTab) activeTab.scrollIntoView({ inline: 'center', block: 'nearest' });
-});
-document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('terms-check').addEventListener('change', function() {
     const btn = document.getElementById('terms-confirm');
     btn.disabled = !this.checked;

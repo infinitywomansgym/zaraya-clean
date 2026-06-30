@@ -13,12 +13,8 @@
 .shop-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;color:#fff;line-height:1}
 .shop-title em{font-style:italic;color:var(--al)}
 .shop-subtitle{font-size:.8rem;color:rgba(255,255,255,.45);letter-spacing:.08em;margin-top:.8rem}
-.cat-tabs-wrap{position:relative;background:var(--g)}
-.cat-tabs-wrap::before,.cat-tabs-wrap::after{content:'';position:absolute;top:0;bottom:0;width:2.5rem;pointer-events:none;z-index:2}
-.cat-tabs-wrap::before{left:0;background:linear-gradient(to right,var(--g),transparent)}
-.cat-tabs-wrap::after{right:0;background:linear-gradient(to left,var(--g),transparent)}
-.cat-tabs{background:var(--g);border-bottom:1px solid rgba(201,168,76,.15);padding:0 3.5rem;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
-.cat-tabs::-webkit-scrollbar{display:none}
+.cat-tabs-wrap{background:var(--g)}
+.cat-tabs{background:var(--g);border-bottom:1px solid rgba(201,168,76,.15);padding:.4rem 3.5rem;display:flex;flex-wrap:wrap;gap:0}
 .cat-tab{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.5);padding:1.1rem 1.6rem;border-bottom:2px solid transparent;transition:all .3s;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0}
 .cat-tab:hover,.cat-tab.active{color:var(--au);border-bottom-color:var(--au)}
 .shop-body{padding:3rem 3.5rem 5rem;background:var(--cr)}
