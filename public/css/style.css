@@ -49,8 +49,8 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 .h-orn-gem{font-size:.55rem;color:rgba(201,168,76,.75);display:block}
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1;color:#fff;margin-bottom:.5rem;animation:fin 1.8s .6s forwards;opacity:0}
 .h-title em{font-style:italic;color:var(--au)}
-.h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:1.2rem;animation:fin 1.8s .8s forwards;opacity:0}
-.h-ar{font-size:1.05rem;color:var(--au);margin-bottom:1.2rem;animation:fin 1.8s .9s forwards;opacity:0}
+.h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.78rem,1.4vw,1rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:1.2rem;animation:fin 1.8s .8s forwards;opacity:0}
+.h-ar{font-size:.85rem;color:var(--au);margin-bottom:1.2rem;animation:fin 1.8s .9s forwards;opacity:0}
 .h-ctas{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;animation:fin 1.8s 1s forwards;opacity:0}
 .h-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;animation:fin 2s 1.5s forwards;opacity:0}
 .h-scroll span{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35)}
@@ -58,7 +58,7 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 @keyframes sla{0%,100%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(.5)}}
 
 /* BUTTONS */
-.btn-g{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:#C9A84C;padding:1rem 2.5rem;text-decoration:none;transition:transform .3s,background .3s;position:relative;overflow:hidden;font-weight:500}
+.btn-g{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:#fff;padding:1rem 2.5rem;text-decoration:none;transition:transform .3s,background .3s;position:relative;overflow:hidden;font-weight:500}
 .btn-g::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.2);transform:translateX(-101%);transition:transform .4s}
 .btn-g:hover::after{transform:translateX(0)}.btn-g:hover{transform:translateY(-2px)}
 .btn-o{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--au);border:1px solid rgba(201,168,76,.5);padding:1rem 2.5rem;text-decoration:none;transition:border-color .3s,transform .3s}
