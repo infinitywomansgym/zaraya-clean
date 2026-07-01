@@ -36,13 +36,13 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 @keyframes henter{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fin{to{opacity:1}}
 /* Logo emblem with decorative rings */
-.h-emblem{position:relative;width:320px;height:320px;margin:0 auto 0.6rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
+.h-emblem{position:relative;width:370px;height:370px;margin:0 auto 0.6rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
 .h-emblem-glow{position:absolute;width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(201,168,76,.28) 0%,rgba(201,168,76,.1) 40%,transparent 70%);border-radius:50%;animation:hglow 3.5s ease-in-out infinite alternate;pointer-events:none}
 @keyframes hglow{from{opacity:.55;transform:translate(-50%,-50%) scale(.9)}to{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
 .h-emblem-ring{position:absolute;border-radius:50%}
 .h-emblem-ring.r1{inset:-20px;border:1px solid rgba(201,168,76,.3);animation:pring 5s ease-in-out infinite}
 .h-emblem-ring.r2{inset:-42px;border:1px solid rgba(201,168,76,.13);animation:pring 5s ease-in-out infinite;animation-delay:2.5s}
-.h-logo-img{height:290px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 6px 32px rgba(201,168,76,.35)) drop-shadow(0 2px 8px rgba(0,0,0,.4))}
+.h-logo-img{height:330px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 6px 32px rgba(201,168,76,.35)) drop-shadow(0 2px 8px rgba(0,0,0,.4))}
 /* Ornamental divider */
 .h-ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:0 auto 0.7rem;animation:fin 1.8s .44s forwards;opacity:0}
 .h-orn-line{display:block;height:1px;width:90px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.55),transparent)}
@@ -58,9 +58,8 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 @keyframes sla{0%,100%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(.5)}}
 
 /* BUTTONS */
-.btn-g{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:#fff;padding:1rem 2.5rem;text-decoration:none;transition:transform .3s,background .3s;position:relative;overflow:hidden;font-weight:500}
-.btn-g::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.2);transform:translateX(-101%);transition:transform .4s}
-.btn-g:hover::after{transform:translateX(0)}.btn-g:hover{transform:translateY(-2px)}
+.btn-g{display:inline-block;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g);background:#fff;border:1px solid rgba(201,168,76,.4);padding:1.05rem 3rem;text-decoration:none;transition:background .3s,border-color .3s,transform .3s;font-weight:500}
+.btn-g:hover{background:rgba(255,255,255,.9);border-color:rgba(201,168,76,.75);transform:translateY(-2px)}
 .btn-o{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--au);border:1px solid rgba(201,168,76,.5);padding:1rem 2.5rem;text-decoration:none;transition:border-color .3s,transform .3s}
 .btn-o:hover{border-color:var(--au);transform:translateY(-2px)}
 
@@ -211,8 +210,8 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem}
   .nav-shop { padding: .4rem .8rem; font-size: .62rem; }
   .nav-admin { padding: .35rem .7rem; font-size: .6rem; }
   .hero-inner { padding: 0 1.2rem; }
-  .h-emblem { width: 240px; height: 240px; margin-bottom: 0.8rem; }
-  .h-logo-img { height: 215px; }
+  .h-emblem { width: 270px; height: 270px; margin-bottom: 0.8rem; }
+  .h-logo-img { height: 240px; }
   .h-orn-line { width: 62px; }
   .h-title { font-size: clamp(2.8rem,10vw,4.5rem); }
   .h-sub { font-size: .95rem; margin-bottom: 1rem; }
@@ -240,8 +239,8 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem}
 @media (max-width: 480px) {
   nav { padding: 0.5rem 1rem; }
   .nav-logo-img { height: 50px; }
-  .h-emblem { width: 200px; height: 200px; margin-bottom: 0.7rem; }
-  .h-logo-img { height: 176px; }
+  .h-emblem { width: 220px; height: 220px; margin-bottom: 0.7rem; }
+  .h-logo-img { height: 195px; }
   .h-orn-line { width: 46px; }
   .h-title { font-size: clamp(2.2rem,9vw,3.5rem); }
   .psteps { grid-template-columns: 1fr; }
