@@ -25,26 +25,26 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
   display: block;
 }
 /* HERO */
-.hero{min-height:auto;padding:4rem 2rem 2.5rem;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--g)}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,#1a5c46 0%,#0a3528 40%,#050f0c 100%)}
+.hero{min-height:88vh;padding:5rem 2rem 3.5rem;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--g)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,#1f6e54 0%,#0d3d2b 38%,#061a13 68%,#020d09 100%)}
 .hero-particles{position:absolute;inset:0;overflow:hidden}
 .particle{position:absolute;background:var(--au);border-radius:50%;animation:floatp linear infinite;opacity:0}
 @keyframes floatp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.6}90%{opacity:.3}100%{transform:translateY(-10vh) scale(1.5);opacity:0}}
-.ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.15);animation:pring 4s ease-in-out infinite}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.22);animation:pring 4s ease-in-out infinite}
 @keyframes pring{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.15}50%{transform:translate(-50%,-50%) scale(1.05);opacity:.3}}
 .hero-inner{position:relative;z-index:2;text-align:center;padding:0 2rem;animation:henter 1.4s cubic-bezier(.16,1,.3,1) forwards;opacity:0}
 @keyframes henter{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fin{to{opacity:1}}
 /* Logo emblem with decorative rings */
-.h-emblem{position:relative;width:320px;height:320px;margin:0 auto 0.3rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
-.h-emblem-glow{position:absolute;width:340px;height:340px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(201,168,76,.2) 0%,rgba(201,168,76,.06) 45%,transparent 70%);border-radius:50%;animation:hglow 3.5s ease-in-out infinite alternate;pointer-events:none}
+.h-emblem{position:relative;width:320px;height:320px;margin:0 auto 0.6rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
+.h-emblem-glow{position:absolute;width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(201,168,76,.28) 0%,rgba(201,168,76,.1) 40%,transparent 70%);border-radius:50%;animation:hglow 3.5s ease-in-out infinite alternate;pointer-events:none}
 @keyframes hglow{from{opacity:.55;transform:translate(-50%,-50%) scale(.9)}to{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
 .h-emblem-ring{position:absolute;border-radius:50%}
 .h-emblem-ring.r1{inset:-20px;border:1px solid rgba(201,168,76,.3);animation:pring 5s ease-in-out infinite}
 .h-emblem-ring.r2{inset:-42px;border:1px solid rgba(201,168,76,.13);animation:pring 5s ease-in-out infinite;animation-delay:2.5s}
 .h-logo-img{height:290px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 6px 32px rgba(201,168,76,.35)) drop-shadow(0 2px 8px rgba(0,0,0,.4))}
 /* Ornamental divider */
-.h-ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:0 auto 0.4rem;animation:fin 1.8s .44s forwards;opacity:0}
+.h-ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:0 auto 0.7rem;animation:fin 1.8s .44s forwards;opacity:0}
 .h-orn-line{display:block;height:1px;width:90px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.55),transparent)}
 .h-orn-gem{font-size:.55rem;color:rgba(201,168,76,.75);display:block}
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1;color:#fff;margin-bottom:.5rem;animation:fin 1.8s .6s forwards;opacity:0}
