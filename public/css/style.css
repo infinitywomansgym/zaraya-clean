@@ -49,8 +49,8 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 .h-orn-gem{font-size:.55rem;color:rgba(201,168,76,.75);display:block}
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1;color:#fff;margin-bottom:.5rem;animation:fin 1.8s .6s forwards;opacity:0}
 .h-title em{font-style:italic;color:var(--au)}
-.h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.78rem,1.4vw,1rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:1.2rem;animation:fin 1.8s .8s forwards;opacity:0}
-.h-ar{font-size:.85rem;color:var(--au);margin-bottom:1.2rem;animation:fin 1.8s .9s forwards;opacity:0}
+.h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.58rem,1vw,.72rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:1.2rem;animation:fin 1.8s .8s forwards;opacity:0}
+.h-ar{font-size:.62rem;color:var(--au);margin-bottom:1.2rem;animation:fin 1.8s .9s forwards;opacity:0}
 .h-ctas{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;animation:fin 1.8s 1s forwards;opacity:0}
 .h-scroll{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-top:1.6rem;animation:fin 2s 1.5s forwards;opacity:0}
 .h-scroll span{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.75)}
