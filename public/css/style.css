@@ -58,8 +58,11 @@ nav.scrolled{background:rgba(7,46,36,.95);backdrop-filter:blur(14px)}
 @keyframes sla{0%,100%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(.5)}}
 
 /* BUTTONS */
-.btn-g{display:inline-block;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g);background:#fff;border:1px solid rgba(201,168,76,.4);padding:1.05rem 3rem;text-decoration:none;transition:background .3s,border-color .3s,transform .3s;font-weight:500}
-.btn-g:hover{background:rgba(255,255,255,.9);border-color:rgba(201,168,76,.75);transform:translateY(-2px)}
+.btn-g{display:inline-block;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g);background:#fff;border:1px solid rgba(201,168,76,.4);padding:1.05rem 3rem;text-decoration:none;transition:border-color .35s,transform .3s,box-shadow .35s;font-weight:500;position:relative;overflow:hidden}
+.btn-g::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(201,168,76,.22) 50%,transparent 65%);transform:translateX(-120%);transition:transform .6s ease}
+.btn-g:hover::before{transform:translateX(120%)}
+.btn-g:hover{border-color:var(--au);transform:translateY(-3px);box-shadow:0 8px 28px rgba(201,168,76,.22)}
+.btn-g:active{transform:translateY(1px) scale(.97);box-shadow:none;transition:transform .1s,box-shadow .1s}
 .btn-o{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--au);border:1px solid rgba(201,168,76,.5);padding:1rem 2.5rem;text-decoration:none;transition:border-color .3s,transform .3s}
 .btn-o:hover{border-color:var(--au);transform:translateY(-2px)}
 
