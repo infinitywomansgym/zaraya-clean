@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.08 });
   document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
+  // Keep the active category tab visible in the swipeable tab row (mobile)
+  const activeTab = document.querySelector('.cat-tab.active');
+  if (activeTab) activeTab.scrollIntoView({ block: 'nearest', inline: 'center' });
+
   // Sort — re-navigate with sort param
   const sortSel = document.getElementById('sortSel');
   if (sortSel) {

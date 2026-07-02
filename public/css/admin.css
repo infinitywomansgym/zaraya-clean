@@ -174,3 +174,24 @@ body.sidebar-open{overflow:hidden}
   .acontent { padding:1rem .75rem; }
   .atop { padding:.6rem .75rem; }
 }
+
+/* Touch devices: thumb-friendly targets + no iOS input zoom */
+@media (pointer: coarse) {
+  .lb-field, .af-inp, .af-sel { font-size:16px; }
+  .aact { padding:.55rem .9rem; font-size:.64rem; }
+  .anav-item { padding:1rem 1.4rem; }
+  .a-logout, .lb-go, .af-save, .add-btn { padding-top:.85rem; padding-bottom:.85rem; }
+  .photo-del { width:22px; height:22px; font-size:.7rem; }
+  .csw { width:32px; height:32px; }
+}
+
+/* Login card fits small phones */
+@media (max-width: 480px) {
+  .lb { width:100%; max-width:380px; margin:1rem; padding:2rem 1.4rem; }
+}
+
+/* iOS safe areas in admin */
+@supports (padding: max(0px)) {
+  .acontent { padding-bottom:max(1.8rem, env(safe-area-inset-bottom)); }
+  .aside-foot { padding-bottom:max(1.1rem, env(safe-area-inset-bottom)); }
+}

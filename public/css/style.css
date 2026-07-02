@@ -260,8 +260,9 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem;border
   .tgrid { grid-template-columns: 1fr; gap: 1rem; }
   .nl { padding: 3.5rem 1.4rem; }
   .nl-form { flex-direction: column; }
-  .nl-inp { padding: .85rem 1rem; }
-  .nl-btn { padding: .85rem 1rem; }
+  /* 16px stops iOS Safari auto-zooming when the field is tapped */
+  .nl-inp { padding: .85rem 1rem; font-size: 16px; }
+  .nl-btn { padding: .95rem 1rem; }
   .fgrid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .fbot { flex-direction: column; gap: .5rem; text-align: center; }
 }
@@ -361,6 +362,11 @@ input,select,textarea,button{-webkit-appearance:none;appearance:none}
 
 /* Scroll progress bar */
 .scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#a9843a,#f5e1a0,#C9A84C);z-index:400;width:0%;transition:width .1s linear}
+
+/* Ultra-wide desktops (4K / 27"+) — keep content comfortably centered */
+@media (min-width: 1800px){
+  section,.categories,.testi,.nl,footer{padding-left:calc((100vw - 1640px)/2);padding-right:calc((100vw - 1640px)/2)}
+}
 
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce){
