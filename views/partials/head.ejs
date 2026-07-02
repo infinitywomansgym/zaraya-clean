@@ -4,6 +4,16 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title><%= title || 'Zaraya – The Jewellery House' %></title>
+  <meta name="description" content="Zaraya – The Jewellery House. Anti-tarnish, waterproof, lightweight everyday jewellery crafted in Calicut, Kerala. Bracelets, necklaces, earrings, rings, bangles & watches."/>
+  <meta name="theme-color" content="#072e24"/>
+  <meta property="og:title" content="<%= title || 'Zaraya – The Jewellery House' %>"/>
+  <meta property="og:description" content="Anti-tarnish, waterproof, lightweight everyday jewellery. No tarnish. No fading. No limits."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="/img/logo.png"/>
+  <link rel="icon" type="image/png" href="/img/logo.png"/>
+  <link rel="apple-touch-icon" href="/img/logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="/css/style.css"/>
   <% if (typeof extraCSS !== 'undefined') { %>
     <link rel="stylesheet" href="/css/<%= extraCSS %>"/>

@@ -13,17 +13,28 @@ const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'zaraya';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '123456';
 const WA_NUMBER      = process.env.WA_NUMBER      || '917090702416';
 
-// ── Rate limiter (in-memory, resets on restart) ────────
-const _orderMap = new Map();
-function orderRateLimit(ip) {
-  const now = Date.now(), window = 60 * 60 * 1000, max = 5;
-  const e = _orderMap.get(ip);
-  if (!e || now > e.r) { _orderMap.set(ip, { c: 1, r: now + window }); return true; }
-  if (e.c >= max) return false;
-  e.c++;
-  return true;
+// ── Rate limiters (in-memory, reset on restart) ────────
+function makeRateLimit(windowMs, max) {
+  const map = new Map();
+  setInterval(() => { const n = Date.now(); map.forEach((v, k) => { if (n > v.r) map.delete(k); }); }, windowMs).unref();
+  return (ip) => {
+    const now = Date.now();
+    const e = map.get(ip);
+    if (!e || now > e.r) { map.set(ip, { c: 1, r: now + windowMs }); return true; }
+    if (e.c >= max) return false;
+    e.c++;
+    return true;
+  };
 }
-setInterval(() => { const n = Date.now(); _orderMap.forEach((v, k) => { if (n > v.r) _orderMap.delete(k); }); }, 60 * 60 * 1000);
+const orderRateLimit = makeRateLimit(60 * 60 * 1000, 5);   // 5 orders / IP / hour
+const loginRateLimit = makeRateLimit(15 * 60 * 1000, 10);  // 10 login attempts / IP / 15 min
+
+// Constant-time string comparison (prevents timing attacks on login)
+function safeEqual(a, b) {
+  const ha = crypto.createHash('sha256').update(String(a)).digest();
+  const hb = crypto.createHash('sha256').update(String(b)).digest();
+  return crypto.timingSafeEqual(ha, hb);
+}
 
 // ── Data File ──────────────────────────────────────────
 const DATA_FILE    = path.join(__dirname, 'data', 'products.json');
@@ -37,6 +48,18 @@ if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]', 'utf8');
 if (!fs.existsSync(CATS_FILE)) fs.writeFileSync(CATS_FILE, '{}', 'utf8');
 
 // ── Multer (product image uploads) ────────────────────
+// Both the MIME type AND the file extension must be an allowed image type —
+// otherwise a renamed .html/.svg could be served from /public (stored XSS).
+const ALLOWED_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
+function imageFilter(req, file, cb) {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (/^image\/(jpeg|png|webp|gif)$/.test(file.mimetype) && ALLOWED_EXT.has(ext)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only jpg, png, webp or gif images are allowed'));
+  }
+}
+
 const catUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => cb(null, CAT_DIR),
@@ -46,12 +69,8 @@ const catUpload = multer({
       cb(null, 'cat-' + safe + '-' + Date.now() + ext);
     }
   }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    /^image\/(jpeg|png|webp|gif)$/.test(file.mimetype)
-      ? cb(null, true)
-      : cb(new Error('Only jpg, png, webp or gif images are allowed'));
-  }
+  limits: { fileSize: 5 * 1024 * 1024, files: 1 },
+  fileFilter: imageFilter
 });
 
 const upload = multer({
@@ -62,40 +81,61 @@ const upload = multer({
       cb(null, Date.now() + '-' + crypto.randomBytes(6).toString('hex') + ext);
     }
   }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    /^image\/(jpeg|png|webp|gif)$/.test(file.mimetype)
-      ? cb(null, true)
-      : cb(new Error('Only jpg, png, webp or gif images are allowed'));
-  }
+  limits: { fileSize: 5 * 1024 * 1024, files: 1 },
+  fileFilter: imageFilter
 });
 
 // ── Middleware ─────────────────────────────────────────
 app.set('trust proxy', 1);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.disable('x-powered-by');
+app.use(express.json({ limit: '50kb' }));
+app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+const IS_PROD = process.env.NODE_ENV === 'production';
 
 // Security headers
 app.use((req, res, next) => {
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('Content-Security-Policy', [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' data:",
+    "connect-src 'self' https://api.emailjs.com",
+    "frame-ancestors 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "object-src 'none'"
+  ].join('; '));
+  if (IS_PROD) {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
   next();
 });
 
+// Refuse to boot in production with default credentials/secret
+if (IS_PROD && (!process.env.ADMIN_PASSWORD || !process.env.SESSION_SECRET)) {
+  console.error('FATAL: Set ADMIN_PASSWORD and SESSION_SECRET environment variables in production.');
+  process.exit(1);
+}
+
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'zaraya-secret-2025',
+  secret: process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex'),
   resave: false,
   saveUninitialized: false,
+  name: 'zaraya.sid',
   cookie: {
     maxAge: 1000 * 60 * 60 * 24,
     httpOnly: true,
-    sameSite: 'strict'
+    sameSite: 'strict',
+    secure: IS_PROD ? 'auto' : false
   }
 }));
 
@@ -181,6 +221,15 @@ function readCatImages() {
 function saveCatImages(d) {
   fs.writeFileSync(CATS_FILE, JSON.stringify(d, null, 2));
 }
+// Delete a file referenced by a public URL path, refusing anything that
+// resolves outside /public (defense-in-depth against path traversal)
+function safeUnlinkPublic(relPath) {
+  if (!relPath || typeof relPath !== 'string') return;
+  const publicDir = path.join(__dirname, 'public');
+  const full = path.resolve(publicDir, '.' + path.posix.normalize('/' + relPath));
+  if (!full.startsWith(publicDir + path.sep)) return;
+  fs.unlink(full, () => {});
+}
 
 // ── Auth guard for admin routes ────────────────────────
 function requireAdmin(req, res, next) {
@@ -227,17 +276,29 @@ app.get('/admin/login', (req, res) => {
 });
 
 app.post('/admin/login', (req, res) => {
-  const { username, password } = req.body;
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-    req.session.admin = true;
-    return res.redirect('/admin');
+  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  if (!loginRateLimit(ip)) {
+    return res.status(429).render('admin/login', { error: 'Too many login attempts. Please try again in 15 minutes.' });
   }
-  res.render('admin/login', { error: 'Wrong username or password. Please try again.' });
+  const { username, password } = req.body;
+  const userOk = safeEqual(username || '', ADMIN_USERNAME);
+  const passOk = safeEqual(password || '', ADMIN_PASSWORD);
+  if (userOk && passOk) {
+    // Regenerate the session ID on privilege change (prevents session fixation)
+    return req.session.regenerate(err => {
+      if (err) return res.render('admin/login', { error: 'Something went wrong. Please try again.' });
+      req.session.admin = true;
+      res.redirect('/admin');
+    });
+  }
+  res.status(401).render('admin/login', { error: 'Wrong username or password. Please try again.' });
 });
 
 app.get('/admin/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/admin/login');
+  req.session.destroy(() => {
+    res.clearCookie('zaraya.sid');
+    res.redirect('/admin/login');
+  });
 });
 
 // ══════════════════════════════════════════════════════
@@ -270,16 +331,17 @@ app.get('/admin/add', requireAdmin, (req, res) => {
 // Add product – save
 app.post('/admin/products/add', requireAdmin, upload.single('image'), (req, res) => {
   const { name, cat, price, badge, stock, visible, bestseller, color } = req.body;
-  if (!name || !price) {
+  const priceNum = parseFloat(price);
+  if (!name || !String(name).trim() || !Number.isFinite(priceNum) || priceNum < 0) {
     if (req.file) fs.unlink(req.file.path, () => {});
-    return res.render('admin/add', { page: 'add', success: false, error: 'Name and price are required.' });
+    return res.render('admin/add', { page: 'add', success: false, error: 'A name and a valid price are required.' });
   }
   const products = readProducts();
   products.unshift({
     id:         Date.now(),
-    name:       name.trim(),
+    name:       String(name).trim(),
     cat:        cat        || 'Bracelets',
-    price:      parseFloat(price),
+    price:      priceNum,
     badge:      badge      || '',
     stock:      stock      === 'on',
     visible:    visible    === 'on',
@@ -298,7 +360,7 @@ app.post('/admin/products/:id/image', requireAdmin, upload.single('image'), (req
   const products = readProducts();
   const p = products.find(x => x.id == req.params.id);
   if (p) {
-    if (p.image) { fs.unlink(path.join(__dirname, 'public', p.image), () => {}); }
+    if (p.image) { safeUnlinkPublic(p.image); }
     p.image = `/img/products/${req.file.filename}`;
     writeProducts(products);
   } else {
@@ -329,7 +391,7 @@ app.post('/admin/products/:id/gallery/:idx/delete', requireAdmin, (req, res) => 
   if (p && Array.isArray(p.images)) {
     const idx = parseInt(req.params.idx);
     if (idx >= 0 && idx < p.images.length) {
-      fs.unlink(path.join(__dirname, 'public', p.images[idx]), () => {});
+      safeUnlinkPublic(p.images[idx]);
       p.images.splice(idx, 1);
       writeProducts(products);
     }
@@ -362,7 +424,7 @@ app.post('/admin/products/:id/delete', requireAdmin, (req, res) => {
   const all = readProducts();
   const target = all.find(x => x.id == req.params.id);
   if (target && target.image) {
-    fs.unlink(path.join(__dirname, 'public', target.image), () => {});
+    safeUnlinkPublic(target.image);
   }
   writeProducts(all.filter(x => x.id != req.params.id));
   res.redirect('/admin/products');
@@ -381,7 +443,7 @@ app.post('/admin/categories/:cat/image', requireAdmin, (req, res) => {
     const cat = req.params.cat;
     if (!ALL_CATS.includes(cat)) { fs.unlink(req.file.path, () => {}); return res.redirect('/admin/categories'); }
     const imgs = readCatImages();
-    if (imgs[cat]) { fs.unlink(path.join(__dirname, 'public', imgs[cat]), () => {}); }
+    if (imgs[cat]) { safeUnlinkPublic(imgs[cat]); }
     imgs[cat] = `/img/categories/${req.file.filename}`;
     saveCatImages(imgs);
     res.redirect('/admin/categories?ok=1');
@@ -391,7 +453,7 @@ app.post('/admin/categories/:cat/image', requireAdmin, (req, res) => {
 app.post('/admin/categories/:cat/remove', requireAdmin, (req, res) => {
   const cat = req.params.cat;
   const imgs = readCatImages();
-  if (imgs[cat]) { fs.unlink(path.join(__dirname, 'public', imgs[cat]), () => {}); }
+  if (imgs[cat]) { safeUnlinkPublic(imgs[cat]); }
   delete imgs[cat];
   saveCatImages(imgs);
   res.redirect('/admin/categories?ok=1');
@@ -433,7 +495,23 @@ app.post('/api/order', (req, res) => {
   res.json({ url: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}` });
 });
 
+// ── 404 + error handling (no stack traces leaked) ──────
+app.use((req, res) => {
+  res.status(404).send('Page not found');
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.message);
+  if (res.headersSent) return next(err);
+  // Multer / upload errors on admin routes → bounce back gracefully
+  if (req.path.startsWith('/admin')) return res.redirect('/admin');
+  res.status(500).json({ error: 'Something went wrong' });
+});
+
 // ── Start ──────────────────────────────────────────────
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
+  if (!process.env.ADMIN_PASSWORD) {
+    console.warn('WARNING: Using default admin credentials — set ADMIN_USERNAME / ADMIN_PASSWORD env vars.');
+  }
 });
