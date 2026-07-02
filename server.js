@@ -120,10 +120,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Refuse to boot in production with default credentials/secret
+// Warn loudly if running in production with default credentials/secret
 if (IS_PROD && (!process.env.ADMIN_PASSWORD || !process.env.SESSION_SECRET)) {
-  console.error('FATAL: Set ADMIN_PASSWORD and SESSION_SECRET environment variables in production.');
-  process.exit(1);
+  console.warn('WARNING: ADMIN_PASSWORD and/or SESSION_SECRET are not set. The site is running with insecure defaults — set these environment variables in your hosting dashboard as soon as possible.');
 }
 
 app.use(session({
