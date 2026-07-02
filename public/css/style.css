@@ -142,8 +142,12 @@ section{padding:6rem 3.5rem}
 .prd{font-size:.76rem;color:var(--tl);line-height:1.7}
 
 /* PROCESS */
-.process{background:var(--cr)}
-.psteps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:4rem}
+.about{padding-bottom:4rem}
+.process{background:var(--cr);position:relative;padding-top:4.5rem;padding-bottom:5rem}
+/* Whisper-subtle divider: hairline + tiny diamond so the section break reads without shouting */
+.process::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(520px,70%);height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.4),transparent)}
+.process::after{content:'◆';position:absolute;top:0;left:50%;transform:translate(-50%,-50%);font-size:.48rem;color:rgba(201,168,76,.55);background:var(--cr);padding:0 .9rem;line-height:1}
+.psteps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem}
 .pstep{text-align:center;position:relative}
 .pstep::after{content:'';position:absolute;top:2rem;left:calc(50% + 2rem);width:calc(100% - 4rem);height:1px;background:linear-gradient(to right,var(--au),transparent)}
 .pstep:last-child::after{display:none}
