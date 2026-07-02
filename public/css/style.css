@@ -261,3 +261,73 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem;border
   .astats { grid-template-columns: 1fr 1fr; }
   .astat-n { font-size: 2rem; }
 }
+
+/* ══════════════════════════════════
+   CROSS-DEVICE COMPATIBILITY
+══════════════════════════════════ */
+
+/* Remove tap flash on iOS/Android */
+*{-webkit-tap-highlight-color:transparent}
+
+/* Prevent double-tap zoom on interactive elements */
+a,button,.cat-card,.btn-g,.btn-o,.cat-tab,.scard{touch-action:manipulation}
+
+/* iOS Safari backdrop-filter prefix */
+nav.scrolled{-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+
+/* iOS input appearance reset */
+input,select,textarea,button{-webkit-appearance:none;appearance:none}
+.nl-inp{border-radius:0}
+
+/* iOS safe area insets (notch / Dynamic Island / home bar) */
+@supports(padding:max(0px)){
+  nav{
+    padding-left:max(3rem,env(safe-area-inset-left));
+    padding-right:max(3rem,env(safe-area-inset-right));
+  }
+  footer{
+    padding-bottom:max(4rem,calc(2rem + env(safe-area-inset-bottom)));
+  }
+}
+
+/* Mobile hamburger button */
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;margin-left:.4rem;flex-shrink:0}
+.nav-burger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.85);border-radius:2px;transition:transform .3s,opacity .2s}
+
+/* Mobile full-screen nav overlay */
+.nav-mob{display:none;position:fixed;inset:0;background:rgba(7,46,36,.97);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);z-index:299;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem}
+.nav-mob.open{display:flex;animation:mob-in .28s ease}
+@keyframes mob-in{from{opacity:0}to{opacity:1}}
+.nav-mob a{font-size:.85rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.75);text-decoration:none;transition:color .3s;padding:.4rem 0}
+.nav-mob a:hover,.nav-mob a:active{color:var(--au)}
+.nav-mob-shop{border:1px solid rgba(201,168,76,.5)!important;padding:.65rem 2rem!important;color:var(--au)!important;margin-top:.6rem}
+.nav-mob-close{position:absolute;top:1.4rem;right:1.4rem;background:none;border:none;color:rgba(255,255,255,.5);font-size:1.4rem;cursor:pointer;padding:.6rem;line-height:1;touch-action:manipulation}
+.nav-mob-close:hover,.nav-mob-close:active{color:var(--au)}
+
+/* Show burger, fix text sizes on mobile */
+@media(max-width:768px){
+  .nav-burger{display:flex}
+  .h-sub{font-size:.72rem!important;margin-bottom:.9rem!important}
+  .h-ar{font-size:.65rem!important;margin-bottom:.9rem!important}
+}
+
+/* Landscape mobile — prevent hero overflow */
+@media(max-width:768px) and (orientation:landscape){
+  .hero{padding:3.5rem 3rem 2rem;min-height:auto}
+  .h-emblem{width:130px!important;height:130px!important;margin-bottom:.4rem!important}
+  .h-logo-img{height:112px!important}
+  .h-title{font-size:clamp(1.6rem,6vw,2.2rem)!important}
+  .h-sub,.h-ar{margin-bottom:.5rem!important}
+  .h-ctas{gap:.6rem}
+  .h-scroll{margin-top:.8rem}
+}
+
+/* Very small phones (≤360px — older Androids, SE) */
+@media(max-width:360px){
+  .h-emblem{width:190px!important;height:190px!important}
+  .h-logo-img{height:168px!important}
+  .h-title{font-size:clamp(1.9rem,8.5vw,2.6rem)!important}
+  .btn-g,.btn-o{width:92%;padding:.8rem 1.2rem}
+  .cat-card-art{height:180px}
+  .fgrid{grid-template-columns:1fr}
+}
