@@ -54,13 +54,13 @@ nav.scrolled .nav-logo-img { height: 78px; }
 /* Welcome eyebrow */
 .h-welcome{font-size:.68rem;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:rgba(245,233,200,.9);text-indent:.45em;margin-bottom:1rem;animation:fin 1.8s .25s forwards;opacity:0}
 /* Logo emblem */
-.h-emblem{position:relative;width:330px;height:330px;margin:0 auto 0.6rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
+.h-emblem{position:relative;width:360px;height:360px;margin:0 auto 0.4rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
 .h-emblem-glow{position:absolute;width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(201,168,76,.16) 0%,rgba(201,168,76,.06) 40%,transparent 70%);border-radius:50%;animation:hglow 3.5s ease-in-out infinite alternate;pointer-events:none}
 @keyframes hglow{from{opacity:.55;transform:translate(-50%,-50%) scale(.9)}to{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
 .h-emblem-ring{position:absolute;border-radius:50%}
 .h-emblem-ring.r1{inset:-20px;border:1px solid rgba(201,168,76,.3);animation:pring 5s ease-in-out infinite}
 .h-emblem-ring.r2{inset:-42px;border:1px solid rgba(201,168,76,.13);animation:pring 5s ease-in-out infinite;animation-delay:2.5s}
-.h-logo-img{height:300px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 6px 32px rgba(201,168,76,.3)) drop-shadow(0 2px 8px rgba(0,0,0,.45))}
+.h-logo-img{height:345px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 6px 32px rgba(201,168,76,.3)) drop-shadow(0 2px 8px rgba(0,0,0,.45))}
 /* Ornamental divider */
 .h-ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:0 auto 0.7rem;animation:fin 1.8s .44s forwards;opacity:0}
 .h-orn-line{display:block;height:1px;width:90px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.55),transparent)}
@@ -255,8 +255,8 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem;border
   .nav-admin { padding: .35rem .7rem; font-size: .6rem; }
   .hero-inner { padding: 0 1.2rem; }
   .h-welcome { font-size: .58rem; letter-spacing: .32em; text-indent: .32em; }
-  .h-emblem { width: 270px; height: 270px; margin-bottom: 0.8rem; }
-  .h-logo-img { height: 240px; }
+  .h-emblem { width: 300px; height: 300px; margin-bottom: 0.6rem; }
+  .h-logo-img { height: 278px; }
   .h-orn-line { width: 62px; }
   .h-title { font-size: clamp(2.8rem,10vw,4.5rem); }
   .h-sub { font-size: .95rem; margin-bottom: 1rem; }
@@ -285,8 +285,8 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem;border
 @media (max-width: 480px) {
   nav { padding: 0.45rem 1rem; }
   .nav-logo-img { height: 56px; }
-  .h-emblem { width: 220px; height: 220px; margin-bottom: 0.7rem; }
-  .h-logo-img { height: 195px; }
+  .h-emblem { width: 248px; height: 248px; margin-bottom: 0.5rem; }
+  .h-logo-img { height: 228px; }
   .h-orn-line { width: 46px; }
   .h-title { font-size: clamp(2.2rem,9vw,3.5rem); }
   .psteps { grid-template-columns: 1fr; }
@@ -347,8 +347,8 @@ input,select,textarea,button{-webkit-appearance:none;appearance:none}
 /* Landscape mobile — prevent hero overflow */
 @media(max-width:768px) and (orientation:landscape){
   .hero{padding:3.5rem 3rem 2rem;min-height:auto}
-  .h-emblem{width:130px!important;height:130px!important;margin-bottom:.4rem!important}
-  .h-logo-img{height:112px!important}
+  .h-emblem{width:148px!important;height:148px!important;margin-bottom:.3rem!important}
+  .h-logo-img{height:132px!important}
   .h-title{font-size:clamp(1.6rem,6vw,2.2rem)!important}
   .h-sub,.h-ar{margin-bottom:.5rem!important}
   .h-ctas{gap:.6rem}
@@ -357,8 +357,8 @@ input,select,textarea,button{-webkit-appearance:none;appearance:none}
 
 /* Very small phones (≤360px — older Androids, SE) */
 @media(max-width:360px){
-  .h-emblem{width:190px!important;height:190px!important}
-  .h-logo-img{height:168px!important}
+  .h-emblem{width:215px!important;height:215px!important}
+  .h-logo-img{height:196px!important}
   .h-title{font-size:clamp(1.9rem,8.5vw,2.6rem)!important}
   .btn-g,.btn-o{width:92%;padding:.8rem 1.2rem}
   .cat-card-art{height:180px}
