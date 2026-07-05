@@ -39,7 +39,10 @@ nav.scrolled{background:rgba(7,46,36,.97);backdrop-filter:blur(18px);box-shadow:
 nav.scrolled .nav-logo-img { height: 78px; }
 /* HERO */
 .hero{min-height:88vh;padding:5rem 2rem 3.5rem;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--g)}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,#1f6e54 0%,#0d3d2b 38%,#061a13 68%,#020d09 100%)}
+.hero-bg{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(4,24,18,.88) 0%,rgba(5,28,21,.66) 34%,rgba(4,22,16,.58) 62%,rgba(2,13,9,.9) 100%),
+  url('/img/hero-bg.jpg') center/cover no-repeat,
+  radial-gradient(ellipse at 50% 42%,#1f6e54 0%,#0d3d2b 38%,#061a13 68%,#020d09 100%)}
 .hero-particles{position:absolute;inset:0;overflow:hidden}
 .particle{position:absolute;background:var(--au);border-radius:50%;animation:floatp linear infinite;opacity:0}
 @keyframes floatp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.6}90%{opacity:.3}100%{transform:translateY(-10vh) scale(1.5);opacity:0}}
@@ -48,14 +51,16 @@ nav.scrolled .nav-logo-img { height: 78px; }
 .hero-inner{position:relative;z-index:2;text-align:center;padding:0 2rem;animation:henter 1.4s cubic-bezier(.16,1,.3,1) forwards;opacity:0}
 @keyframes henter{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fin{to{opacity:1}}
-/* Logo emblem with decorative rings */
-.h-emblem{position:relative;width:370px;height:370px;margin:0 auto 0.6rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
-.h-emblem-glow{position:absolute;width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(201,168,76,.28) 0%,rgba(201,168,76,.1) 40%,transparent 70%);border-radius:50%;animation:hglow 3.5s ease-in-out infinite alternate;pointer-events:none}
+/* Welcome eyebrow */
+.h-welcome{font-size:.68rem;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:rgba(245,233,200,.9);text-indent:.45em;margin-bottom:1rem;animation:fin 1.8s .25s forwards;opacity:0}
+/* Logo emblem */
+.h-emblem{position:relative;width:330px;height:330px;margin:0 auto 0.6rem;display:flex;align-items:center;justify-content:center;animation:fin 1.8s .2s forwards;opacity:0}
+.h-emblem-glow{position:absolute;width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(201,168,76,.16) 0%,rgba(201,168,76,.06) 40%,transparent 70%);border-radius:50%;animation:hglow 3.5s ease-in-out infinite alternate;pointer-events:none}
 @keyframes hglow{from{opacity:.55;transform:translate(-50%,-50%) scale(.9)}to{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
 .h-emblem-ring{position:absolute;border-radius:50%}
 .h-emblem-ring.r1{inset:-20px;border:1px solid rgba(201,168,76,.3);animation:pring 5s ease-in-out infinite}
 .h-emblem-ring.r2{inset:-42px;border:1px solid rgba(201,168,76,.13);animation:pring 5s ease-in-out infinite;animation-delay:2.5s}
-.h-logo-img{height:330px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 6px 32px rgba(201,168,76,.35)) drop-shadow(0 2px 8px rgba(0,0,0,.4))}
+.h-logo-img{height:300px;width:auto;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 6px 32px rgba(201,168,76,.3)) drop-shadow(0 2px 8px rgba(0,0,0,.45))}
 /* Ornamental divider */
 .h-ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:0 auto 0.7rem;animation:fin 1.8s .44s forwards;opacity:0}
 .h-orn-line{display:block;height:1px;width:90px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.55),transparent)}
@@ -66,7 +71,7 @@ nav.scrolled .nav-logo-img { height: 78px; }
 
 /* HERO GRAIN TEXTURE */
 .hero-grain{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.58rem,1vw,.72rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:1.2rem;animation:fin 1.8s .8s forwards;opacity:0}
+.h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.8rem,1.3vw,1rem);font-weight:300;color:rgba(255,255,255,.62);letter-spacing:.14em;margin-bottom:1.2rem;animation:fin 1.8s .8s forwards;opacity:0}
 .h-ar{font-size:.62rem;color:var(--au);margin-bottom:1.2rem;animation:fin 1.8s .9s forwards;opacity:0}
 .h-ctas{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;animation:fin 1.8s 1s forwards;opacity:0}
 .h-scroll{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-top:1.6rem;animation:fin 2s 1.5s forwards;opacity:0}
@@ -249,6 +254,7 @@ footer{background:var(--g);color:rgba(245,233,200,.6);padding:4rem 3.5rem;border
   .nav-shop { padding: .4rem .8rem; font-size: .62rem; }
   .nav-admin { padding: .35rem .7rem; font-size: .6rem; }
   .hero-inner { padding: 0 1.2rem; }
+  .h-welcome { font-size: .58rem; letter-spacing: .32em; text-indent: .32em; }
   .h-emblem { width: 270px; height: 270px; margin-bottom: 0.8rem; }
   .h-logo-img { height: 240px; }
   .h-orn-line { width: 62px; }
