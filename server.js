@@ -4,6 +4,7 @@ const multer  = require('multer');
 const path    = require('path');
 const fs      = require('fs');
 const crypto  = require('crypto');
+const gsync   = require('./github-sync');
 
 const app  = express();
 const PORT = process.env.PORT || 8000;
@@ -212,6 +213,7 @@ function readProducts() {
 }
 function writeProducts(products) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(products, null, 2));
+  gsync.pushFile(DATA_FILE, 'data/products.json');
 }
 function readCatImages() {
   try { return JSON.parse(fs.readFileSync(CATS_FILE, 'utf8')); }
@@ -219,6 +221,13 @@ function readCatImages() {
 }
 function saveCatImages(d) {
   fs.writeFileSync(CATS_FILE, JSON.stringify(d, null, 2));
+  gsync.pushFile(CATS_FILE, 'data/categories.json');
+}
+// Mirror a freshly uploaded image (multer file) into the repo
+function syncUpload(file) {
+  if (!file) return;
+  const rel = path.relative(__dirname, file.path).split(path.sep).join('/');
+  gsync.pushFile(file.path, rel);
 }
 // Delete a file referenced by a public URL path, refusing anything that
 // resolves outside /public (defense-in-depth against path traversal)
@@ -228,6 +237,7 @@ function safeUnlinkPublic(relPath) {
   const full = path.resolve(publicDir, '.' + path.posix.normalize('/' + relPath));
   if (!full.startsWith(publicDir + path.sep)) return;
   fs.unlink(full, () => {});
+  gsync.deleteFile(path.relative(__dirname, full).split(path.sep).join('/'));
 }
 
 // ── Auth guard for admin routes ────────────────────────
@@ -349,6 +359,7 @@ app.post('/admin/products/add', requireAdmin, upload.single('image'), (req, res)
     image:      req.file   ? `/img/products/${req.file.filename}` : '',
     images:     []
   });
+  syncUpload(req.file);
   writeProducts(products);
   res.render('admin/add', { page: 'add', success: true, error: null });
 });
@@ -361,6 +372,7 @@ app.post('/admin/products/:id/image', requireAdmin, upload.single('image'), (req
   if (p) {
     if (p.image) { safeUnlinkPublic(p.image); }
     p.image = `/img/products/${req.file.filename}`;
+    syncUpload(req.file);
     writeProducts(products);
   } else {
     fs.unlink(req.file.path, () => {});
@@ -376,6 +388,7 @@ app.post('/admin/products/:id/gallery', requireAdmin, upload.single('image'), (r
   if (p) {
     if (!Array.isArray(p.images)) p.images = [];
     p.images.push(`/img/products/${req.file.filename}`);
+    syncUpload(req.file);
     writeProducts(products);
   } else {
     fs.unlink(req.file.path, () => {});
@@ -444,6 +457,7 @@ app.post('/admin/categories/:cat/image', requireAdmin, (req, res) => {
     const imgs = readCatImages();
     if (imgs[cat]) { safeUnlinkPublic(imgs[cat]); }
     imgs[cat] = `/img/categories/${req.file.filename}`;
+    syncUpload(req.file);
     saveCatImages(imgs);
     res.redirect('/admin/categories?ok=1');
   });
@@ -512,5 +526,10 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
   if (!process.env.ADMIN_PASSWORD) {
     console.warn('WARNING: Using default admin credentials — set ADMIN_USERNAME / ADMIN_PASSWORD env vars.');
+  }
+  if (gsync.enabled) {
+    console.log('[github-sync] active — admin changes are saved permanently to the GitHub repo.');
+  } else if (IS_PROD) {
+    console.warn('WARNING: GITHUB_TOKEN is not set — products and photos added in the admin panel WILL BE LOST on the next deploy. Set GITHUB_TOKEN in the hosting dashboard.');
   }
 });
