@@ -1,15 +1,1 @@
-[
-  {
-    "id": 1784286283060,
-    "name": "logo",
-    "cat": "Bracelets",
-    "price": 72,
-    "badge": "Bestseller",
-    "stock": true,
-    "visible": true,
-    "bestseller": true,
-    "color": "#0d3a2c",
-    "image": "/img/products/1784286283054-31468c591565.png",
-    "images": []
-  }
-]
+[]
