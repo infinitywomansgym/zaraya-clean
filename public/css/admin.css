@@ -152,12 +152,28 @@ body.sidebar-open{overflow:hidden}
   /* Stats: 2 columns */
   .stat-strip { grid-template-columns:1fr 1fr; gap:.75rem; }
 
-  /* Table: readable on small screens */
-  .admin-table th,.admin-table td { padding:.6rem .75rem; font-size:.75rem; }
+  /* Tables become stacked cards — every column (incl. Hide/Show actions)
+     is visible without sideways scrolling */
+  .admin-table { border:none; background:transparent; }
+  .admin-table thead { display:none; }
+  .admin-table tbody { display:block; }
+  .admin-table tr { display:block; background:#fff; border:1px solid #e0dbd2; margin-bottom:.9rem; padding:.85rem 1rem; }
+  .admin-table td { display:block; padding:.28rem 0 !important; border-bottom:none; font-size:.85rem; }
+  .admin-table tr:hover td { background:transparent; }
+  .td-name { font-size:1.02rem; padding-top:.5rem !important; }
+  .admin-table td .pill { margin-right:.4rem; }
   .view-hdr { flex-direction:column; align-items:flex-start; gap:.75rem; }
 
-  /* Actions wrap */
-  .acts { flex-wrap:wrap; }
+  /* Actions wrap, with breathing room above */
+  .acts { flex-wrap:wrap; gap:.5rem; margin-top:.55rem; }
+
+  /* Overview list stacks per item */
+  .ov-item { flex-direction:column; align-items:flex-start; gap:.45rem; }
+
+  /* Category images: two per row so the page doesn't become one giant square */
+  .cat-img-grid { grid-template-columns:repeat(2,1fr); gap:.8rem; }
+  .cat-img-card { padding:.7rem; }
+  .cat-img-card .aact { padding:.5rem .7rem; font-size:.6rem; }
 
   /* Form: single column */
   .aform-grid { grid-template-columns:1fr; }
