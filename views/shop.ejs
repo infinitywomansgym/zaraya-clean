@@ -45,9 +45,16 @@
   </div>
 </div>
 
+<%
+  const hc = typeof hiddenCats !== 'undefined' ? hiddenCats : [];
+  // Hidden categories drop out of the menus, but a category the visitor is
+  // currently viewing stays listed so the active tab is never missing.
+  const navCats = ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers']
+    .filter(c => !hc.includes(c) || c === cat);
+%>
 <div class="cat-tabs-wrap">
   <div class="cat-tabs">
-    <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'].forEach(c => { %>
+    <% navCats.forEach(c => { %>
       <a href="/shop?cat=<%= c %>" class="cat-tab <%= cat === c ? 'active' : '' %>">
         <%= c === 'Bestsellers' ? '★ Best Sellers' : c %>
       </a>
@@ -122,7 +129,7 @@
 
 <div class="shop-footer">
   <div class="sf-links">
-    <% ['All','Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'].forEach(c => { %>
+    <% navCats.forEach(c => { %>
       <a href="/shop?cat=<%= c %>"><%= c === 'Bestsellers' ? 'Best Sellers' : c %></a>
     <% }) %>
   </div>

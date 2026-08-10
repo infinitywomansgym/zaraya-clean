@@ -41,12 +41,14 @@ function safeEqual(a, b) {
 const DATA_FILE    = path.join(__dirname, 'data', 'products.json');
 const UPLOAD_DIR   = path.join(__dirname, 'public', 'img', 'products');
 const CATS_FILE    = path.join(__dirname, 'data', 'categories.json');
+const CATVIS_FILE  = path.join(__dirname, 'data', 'category-visibility.json');
 const CAT_DIR      = path.join(__dirname, 'public', 'img', 'categories');
 fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 fs.mkdirSync(CAT_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]', 'utf8');
 if (!fs.existsSync(CATS_FILE)) fs.writeFileSync(CATS_FILE, '{}', 'utf8');
+if (!fs.existsSync(CATVIS_FILE)) fs.writeFileSync(CATVIS_FILE, '[]', 'utf8');
 
 // ── Multer (product image uploads) ────────────────────
 // Both the MIME type AND the file extension must be an allowed image type —
@@ -223,6 +225,18 @@ function saveCatImages(d) {
   fs.writeFileSync(CATS_FILE, JSON.stringify(d, null, 2));
   gsync.pushFile(CATS_FILE, 'data/categories.json');
 }
+// Categories the owner has hidden — they disappear from the homepage grid
+// and the shop's category tabs until shown again.
+function readHiddenCats() {
+  try {
+    const v = JSON.parse(fs.readFileSync(CATVIS_FILE, 'utf8'));
+    return Array.isArray(v) ? v : [];
+  } catch { return []; }
+}
+function saveHiddenCats(list) {
+  fs.writeFileSync(CATVIS_FILE, JSON.stringify(list, null, 2));
+  gsync.pushFile(CATVIS_FILE, 'data/category-visibility.json');
+}
 // Mirror a freshly uploaded image (multer file) into the repo
 function syncUpload(file) {
   if (!file) return;
@@ -252,7 +266,7 @@ function requireAdmin(req, res, next) {
 
 // Home
 app.get('/', (req, res) => {
-  res.render('index', { catImages: readCatImages() });
+  res.render('index', { catImages: readCatImages(), hiddenCats: readHiddenCats() });
 });
 
 // Shop – list products, filtered by category
@@ -272,7 +286,7 @@ app.get('/shop', (req, res) => {
   if (sort === 'price-desc') products.sort((a, b) => b.price - a.price);
   if (sort === 'name')       products.sort((a, b) => a.name.localeCompare(b.name));
 
-  res.render('shop', { products, cat, sort });
+  res.render('shop', { products, cat, sort, hiddenCats: readHiddenCats() });
 });
 
 // ══════════════════════════════════════════════════════
@@ -446,7 +460,25 @@ app.post('/admin/products/:id/delete', requireAdmin, (req, res) => {
 const ALL_CATS = ['Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers'];
 
 app.get('/admin/categories', requireAdmin, (req, res) => {
-  res.render('admin/categories', { catImages: readCatImages(), cats: ALL_CATS, page: 'categories', success: !!req.query.ok });
+  res.render('admin/categories', {
+    catImages:  readCatImages(),
+    hiddenCats: readHiddenCats(),
+    cats:       ALL_CATS,
+    page:       'categories',
+    success:    !!req.query.ok
+  });
+});
+
+// Hide / show a category on the storefront
+app.post('/admin/categories/:cat/toggle-visibility', requireAdmin, (req, res) => {
+  const cat = req.params.cat;
+  if (!ALL_CATS.includes(cat)) return res.redirect('/admin/categories');
+  const hidden = readHiddenCats();
+  const idx = hidden.indexOf(cat);
+  if (idx === -1) hidden.push(cat);
+  else hidden.splice(idx, 1);
+  saveHiddenCats(hidden);
+  res.redirect('/admin/categories?ok=1');
 });
 
 app.post('/admin/categories/:cat/image', requireAdmin, (req, res) => {

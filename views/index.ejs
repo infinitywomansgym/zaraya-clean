@@ -71,8 +71,13 @@
     </div>
     <a href="/shop" class="view-all-link">View All →</a>
   </div>
-  <% const ci = typeof catImages !== 'undefined' ? catImages : {}; %>
+  <%
+    const ci = typeof catImages !== 'undefined' ? catImages : {};
+    const hc = typeof hiddenCats !== 'undefined' ? hiddenCats : [];
+    const shown = c => !hc.includes(c);
+  %>
   <div class="cat-grid">
+    <% if (shown('Bracelets')) { %>
     <a href="/shop?cat=Bracelets" class="cat-card rv d1">
       <div class="cat-card-art" style="background:#0a3226">
         <% if (ci.Bracelets) { %><img src="<%= ci.Bracelets %>" alt="Bracelets" class="cat-art-photo" loading="lazy" decoding="async"/><% } else { %>
@@ -91,6 +96,8 @@
         <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
+    <% } %>
+    <% if (shown('Necklaces')) { %>
     <a href="/shop?cat=Necklaces" class="cat-card rv d2">
       <div class="cat-card-art" style="background:#0a2a40">
         <% if (ci.Necklaces) { %><img src="<%= ci.Necklaces %>" alt="Necklaces" class="cat-art-photo" loading="lazy" decoding="async"/><% } else { %>
@@ -107,6 +114,8 @@
         <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
+    <% } %>
+    <% if (shown('Earrings')) { %>
     <a href="/shop?cat=Earrings" class="cat-card rv d3">
       <div class="cat-card-art" style="background:#3a0d1a">
         <% if (ci.Earrings) { %><img src="<%= ci.Earrings %>" alt="Earrings" class="cat-art-photo" loading="lazy" decoding="async"/><% } else { %>
@@ -127,6 +136,8 @@
         <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
+    <% } %>
+    <% if (shown('Rings')) { %>
     <a href="/shop?cat=Rings" class="cat-card rv d4">
       <div class="cat-card-art" style="background:#0e3d2e">
         <% if (ci.Rings) { %><img src="<%= ci.Rings %>" alt="Rings" class="cat-art-photo" loading="lazy" decoding="async"/><% } else { %>
@@ -144,6 +155,8 @@
         <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
+    <% } %>
+    <% if (shown('Bangles')) { %>
     <a href="/shop?cat=Bangles" class="cat-card rv d5">
       <div class="cat-card-art" style="background:#0b3830">
         <% if (ci.Bangles) { %><img src="<%= ci.Bangles %>" alt="Bangles" class="cat-art-photo" loading="lazy" decoding="async"/><% } else { %>
@@ -160,6 +173,8 @@
         <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
+    <% } %>
+    <% if (shown('Watches')) { %>
     <a href="/shop?cat=Watches" class="cat-card rv d6">
       <div class="cat-card-art" style="background:#1a2a3a">
         <% if (ci.Watches) { %><img src="<%= ci.Watches %>" alt="Watches" class="cat-art-photo" loading="lazy" decoding="async"/><% } else { %>
@@ -185,6 +200,8 @@
         <div class="cat-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
+    <% } %>
+    <% if (shown('Bestsellers')) { %>
     <a href="/shop?cat=Bestsellers" class="cat-card bestseller rv d7">
       <span class="bs-badge">★ Best Sellers</span>
       <div class="cat-card-art" style="background:linear-gradient(135deg,#1a4a30 0%,#0d3020 100%)">
@@ -203,6 +220,7 @@
         <div class="cat-card-arrow" style="border-color:rgba(201,168,76,.5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
+    <% } %>
   </div>
 </section>
 

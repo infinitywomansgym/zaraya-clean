@@ -14,13 +14,12 @@
     </div>
     <div>
       <span class="fct">Shop</span>
+      <% const fhc = typeof hiddenCats !== 'undefined' ? hiddenCats : []; %>
       <ul class="flinks">
-        <li><a href="/shop?cat=Bracelets">Bracelets</a></li>
-        <li><a href="/shop?cat=Necklaces">Necklaces</a></li>
-        <li><a href="/shop?cat=Earrings">Earrings</a></li>
-        <li><a href="/shop?cat=Rings">Rings</a></li>
-        <li><a href="/shop?cat=Bangles">Bangles</a></li>
-        <li><a href="/shop?cat=Bestsellers">Best Sellers</a></li>
+        <% ['Bracelets','Necklaces','Earrings','Rings','Bangles','Watches','Bestsellers']
+             .filter(c => !fhc.includes(c)).forEach(c => { %>
+        <li><a href="/shop?cat=<%= c %>"><%= c === 'Bestsellers' ? 'Best Sellers' : c %></a></li>
+        <% }) %>
       </ul>
     </div>
     <div>

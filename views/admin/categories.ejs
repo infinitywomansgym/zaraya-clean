@@ -8,12 +8,13 @@
   <div class="success-msg">Category image updated successfully.</div>
 <% } %>
 
-<p style="font-size:.82rem;color:#5a5a5a;margin-bottom:1.8rem;line-height:1.7;">Upload a real photo for each category — it replaces the illustration on the homepage. Leave blank to keep the illustration.</p>
+<p style="font-size:.82rem;color:#5a5a5a;margin-bottom:1.8rem;line-height:1.7;">Upload a real photo for each category — it replaces the illustration on the homepage. Leave blank to keep the illustration. Use <strong>Hide</strong> to remove a category from the homepage and shop menu until you are ready to sell it.</p>
 
 <div class="cat-img-grid">
-  <% cats.forEach(cat => { %>
+  <% cats.forEach(cat => {
+       const isHidden = hiddenCats.includes(cat); %>
   <div class="cat-img-card">
-    <div class="cat-img-preview">
+    <div class="cat-img-preview" style="<%= isHidden ? 'opacity:.45;' : '' %>">
       <% if (catImages[cat]) { %>
         <img src="<%= catImages[cat] %>" alt="<%= cat %>" style="width:100%;height:100%;object-fit:cover;display:block;"/>
       <% } else { %>
@@ -21,7 +22,15 @@
       <% } %>
     </div>
     <p class="cat-img-name"><%= cat === 'Bestsellers' ? 'Best Sellers' : cat %></p>
+    <p style="margin:-.4rem 0 .7rem;">
+      <span class="pill <%= isHidden ? 'p-hid' : 'p-vis' %>"><%= isHidden ? '◌ Hidden' : '👁 Visible' %></span>
+    </p>
     <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <form method="POST" action="/admin/categories/<%= cat %>/toggle-visibility">
+        <button class="aact <%= isHidden ? 'a-show' : 'a-hide' %>" type="submit">
+          <%= isHidden ? '👁 Show' : '🙈 Hide' %>
+        </button>
+      </form>
       <form method="POST" action="/admin/categories/<%= cat %>/image" enctype="multipart/form-data">
         <label class="aact a-show" style="cursor:pointer;white-space:nowrap;display:inline-block;">
           📷 <%= catImages[cat] ? 'Replace' : 'Upload' %>
